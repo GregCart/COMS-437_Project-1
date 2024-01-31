@@ -36,7 +36,8 @@ namespace _2D_Monogame_Individual_Project
             walls = new Wall[10];
             wallThickness = 4;
             _wallColor = new Rectangle(2, 0, 1, 1);
-            ball = new Ball();
+
+            ball = new Ball(this);
 
             rnd = new Random();
 
@@ -51,7 +52,6 @@ namespace _2D_Monogame_Individual_Project
             _frame.lowerRight = new Vector2(GraphicsDevice.Viewport.Width - 5, GraphicsDevice.Viewport.Height - 5);
             _frame.center = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
 
-            ball.sprite.tex = Content.Load<Texture2D>("Textures/ball");
             ball.sprite.loc = new Vector2((float)((rnd.NextDouble() * ((_frame.upperRight.X - _frame.upperLeft.X) - ball.sprite.tex.Width)) + _frame.upperLeft.X),
                         (float)((rnd.NextDouble() * ((_frame.lowerRight.Y - _frame.upperRight.Y) - ball.sprite.tex.Height)) + _frame.upperRight.Y));
             ball.vel = new Vector2(-3, 1);
@@ -205,27 +205,13 @@ namespace _2D_Monogame_Individual_Project
                     scale = 1.0f,
                 }
             };
-            //Vector2 angle = Vector2.Subtract(_frame.upperLeft, _frame.lowerLeft);
-            //walls[2] = new Wall()
-            //{
-            //    sprite = new SpriteData
-            //    {
-            //        rect = new Rectangle(
-            //                (int)(_frame.upperLeft.X),
-            //                (int)(_frame.upperLeft.Y),
-            //                (int)(angle.Length() + wallThickness),
-            //                wallThickness
-            //           ),
-            //        rotation = (float)(Math.Atan2(angle.Y, angle.X) + Math.PI),
-            //        scale = 1.0f,
-            //    },
-            //};
 
-            foreach (Wall wall in walls) {
-                wall.sprite.tex = Content.Load<Texture2D>("Textures/COMS_437-Project_1-ColorStrip");
-            }            
+            Components.Add(ball);
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            Services.AddService(typeof(SpriteBatch), _spriteBatch );
+
+            base.LoadContent();
         }
 
         protected override void Update(GameTime gameTime)
@@ -292,16 +278,9 @@ namespace _2D_Monogame_Individual_Project
 
             _spriteBatch.Begin();
 
-            foreach (Wall wall in walls)
-            {
-                _spriteBatch.Draw(wall.sprite.tex, wall.sprite.rect, _wallColor, Color.White, wall.sprite.rotation, Vector2.Zero, SpriteEffects.None, 0.0f);
-            }
-            _spriteBatch.Draw(ball.sprite.tex, ball.sprite.loc, null, Color.White, ball.sprite.rotation, Vector2.Zero, ball.sprite.scale, SpriteEffects.None, 0.0f);
-
-            _spriteBatch.End();
+            base.Draw(gameTime); 
             
-
-            base.Draw(gameTime);
+            _spriteBatch.End();
         }
     }
 }

@@ -35,17 +35,5 @@ namespace _2D_Monogame_Individual_Project.Content
         }
     }
 
-    public class Ball
-    {
-        public SpriteData sprite;
-        public Vector2 vel;
-    }
-
-    public class Wall
-    {
-        public SpriteData sprite;
-        public float angle;
-    }
-
     
 }
