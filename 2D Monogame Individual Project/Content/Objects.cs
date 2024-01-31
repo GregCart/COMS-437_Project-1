@@ -34,6 +34,4 @@ namespace _2D_Monogame_Individual_Project.Content
             return new Vector2(tex.Height, tex.Width) * scale;
         }
     }
-
-    
 }

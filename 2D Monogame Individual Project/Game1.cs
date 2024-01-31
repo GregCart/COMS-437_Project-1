@@ -41,6 +41,7 @@ namespace _2D_Monogame_Individual_Project
 
             rnd = new Random();
 
+
             base.Initialize();
         }
 
@@ -52,16 +53,11 @@ namespace _2D_Monogame_Individual_Project
             _frame.lowerRight = new Vector2(GraphicsDevice.Viewport.Width - 5, GraphicsDevice.Viewport.Height - 5);
             _frame.center = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
 
-            ball.sprite.loc = new Vector2((float)((rnd.NextDouble() * ((_frame.upperRight.X - _frame.upperLeft.X) - ball.sprite.tex.Width)) + _frame.upperLeft.X),
-                        (float)((rnd.NextDouble() * ((_frame.lowerRight.Y - _frame.upperRight.Y) - ball.sprite.tex.Height)) + _frame.upperRight.Y));
-            ball.vel = new Vector2(-3, 1);
-            ball.sprite.scale = .1f;
-
             minLength = (int) ball.sprite.size().Length() + 1;
 
             int x = (int)(_frame.center.X - 300 - wallThickness);
             int y = (int)(_frame.center.Y - 150);
-            walls[0] = new Wall()
+            walls[0] = new Wall(this)
             {
                 sprite = new SpriteData {
                     rect = new Rectangle(
@@ -76,7 +72,7 @@ namespace _2D_Monogame_Individual_Project
             };
             x = (int)(_frame.center.X - 70 - wallThickness);
             y = (int)(_frame.center.Y - 90 + minLength);
-            walls[1] = new Wall()
+            walls[1] = new Wall(this)
             {
                 sprite = new SpriteData
                 {
@@ -92,7 +88,7 @@ namespace _2D_Monogame_Individual_Project
             };
             x = walls[0].sprite.rect.Left;
             y = walls[0].sprite.rect.Bottom;
-            walls[2] = new Wall()
+            walls[2] = new Wall(this)
             {
                 sprite = new SpriteData
                 {
@@ -107,7 +103,24 @@ namespace _2D_Monogame_Individual_Project
                     scale = 1.0f,
                 }
             };
-            walls[3] = new Wall()
+            x = walls[2].sprite.rect.X;
+            y = walls[2].sprite.rect.Y - walls[0].sprite.rect.Height;
+            walls[3] = new Wall(this)
+            {
+                sprite = new SpriteData
+                {
+                    rect = new Rectangle(
+                            x,
+                            y,
+                            walls[2].sprite.rect.Width,
+                            walls[2].sprite.rect.Height
+                       ),
+                    rotation = 0.0f,
+                    scale = 1.0f,
+                }
+            };
+
+            walls[4] = new Wall(this)
             {
                 sprite = new SpriteData
                 {
@@ -121,7 +134,7 @@ namespace _2D_Monogame_Individual_Project
                     scale = 1.0f,
                 }
             };
-            walls[4] = new Wall()
+            walls[5] = new Wall(this)
             {
                 sprite = new SpriteData
                 {
@@ -135,7 +148,7 @@ namespace _2D_Monogame_Individual_Project
                     scale = 1.0f,
                 }
             };
-            walls[5] = new Wall()
+            walls[6] = new Wall(this)
             {
                 sprite = new SpriteData
                 {
@@ -149,7 +162,7 @@ namespace _2D_Monogame_Individual_Project
                     scale = 1.0f,
                 }
             };
-            walls[6] = new Wall()
+            walls[7] = new Wall(this)
             {
                 sprite = new SpriteData
                 {
@@ -163,7 +176,7 @@ namespace _2D_Monogame_Individual_Project
                     scale = 1.0f,
                 }
             };
-            walls[7] = new Wall()
+            walls[8] = new Wall(this)
             {
                 sprite = new SpriteData
                 {
@@ -177,21 +190,7 @@ namespace _2D_Monogame_Individual_Project
                     scale = 1.0f,
                 }
             };
-            walls[8] = new Wall()
-            {
-                sprite = new SpriteData
-                {
-                    rect = new Rectangle(
-                            (int)(_frame.center.X - 20 - wallThickness),
-                            (int)(_frame.center.Y - 5 - wallThickness),
-                            10,
-                            wallThickness
-                       ),
-                    rotation = 0.0f,
-                    scale = 1.0f,
-                }
-            };
-            walls[9] = new Wall()
+            walls[9] = new Wall(this)
             {
                 sprite = new SpriteData
                 {
@@ -209,7 +208,9 @@ namespace _2D_Monogame_Individual_Project
             Components.Add(ball);
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            Services.AddService(typeof(SpriteBatch), _spriteBatch );
+            Services.AddService(typeof(SpriteBatch), _spriteBatch);
+
+            ball.Setup(_frame, rnd);
 
             base.LoadContent();
         }

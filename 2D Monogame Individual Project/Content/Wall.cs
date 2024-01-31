@@ -18,6 +18,17 @@ namespace _2D_Monogame_Individual_Project.Content
 
         public Wall(Game game) : base(game)
         {
+
+        }
+
+        public Wall(Game game, int x, int y, int w, int h, int r, int s) : base(game)
+        {
+            this.sprite = new SpriteData
+            {
+                rect = new Rectangle(x, y, w, h),
+                rotation = r,
+                scale = s,
+            };
         }
 
         protected override void LoadContent()

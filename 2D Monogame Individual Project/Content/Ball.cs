@@ -15,7 +15,18 @@ namespace _2D_Monogame_Individual_Project.Content
         public Vector2 vel;
 
 
-        public Ball(Game game) : base(game) { }
+        public Ball(Game game) : base(game) {}
+
+        public Ball Setup(Frame2D frame, Random rnd)
+        {
+            this.sprite.loc = new Vector2(
+                (float)((rnd.NextDouble() * ((frame.upperRight.X - frame.upperLeft.X) - this.sprite.tex.Width)) + frame.upperLeft.X),
+                (float)((rnd.NextDouble() * ((frame.lowerRight.Y - frame.upperRight.Y) - this.sprite.tex.Height)) + frame.upperRight.Y));
+            this.vel = new Vector2(-3, 1);
+            this.sprite.scale = .1f;
+
+            return this;
+        }
 
         protected override void LoadContent()
         {
