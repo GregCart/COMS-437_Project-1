@@ -47,19 +47,35 @@ namespace _2D_Monogame_Individual_Project
 
         protected override void LoadContent()
         {
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            Services.AddService(typeof(SpriteBatch), _spriteBatch);
+
+            Components.Add(ball);
+
             _frame.upperLeft = new Vector2(5, 5);
             _frame.upperRight = new Vector2(GraphicsDevice.Viewport.Width - 5, 5);
             _frame.lowerLeft = new Vector2(5, GraphicsDevice.Viewport.Height - 5);
             _frame.lowerRight = new Vector2(GraphicsDevice.Viewport.Width - 5, GraphicsDevice.Viewport.Height - 5);
             _frame.center = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
 
+            base.LoadContent();
+
+            ball.Setup(_frame, rnd);
+
+            ball.sprite.loc = new Vector2(
+                (float)((rnd.NextDouble() * ((_frame.upperRight.X - _frame.upperLeft.X) - ball.sprite.tex.Width)) + _frame.upperLeft.X),
+                (float)((rnd.NextDouble() * ((_frame.lowerRight.Y - _frame.upperRight.Y) - ball.sprite.tex.Height)) + _frame.upperRight.Y));
+            ball.vel = new Vector2(-3, 1);
+            ball.sprite.scale = .1f;
+            
             minLength = (int) ball.sprite.size().Length() + 1;
 
             int x = (int)(_frame.center.X - 300 - wallThickness);
             int y = (int)(_frame.center.Y - 150);
             walls[0] = new Wall(this)
             {
-                sprite = new SpriteData {
+                sprite = new SpriteData
+                {
                     rect = new Rectangle(
                             x,
                             y,
@@ -70,6 +86,7 @@ namespace _2D_Monogame_Individual_Project
                     scale = 1.0f,
                 }
             };
+
             x = (int)(_frame.center.X - 70 - wallThickness);
             y = (int)(_frame.center.Y - 90 + minLength);
             walls[1] = new Wall(this)
@@ -86,6 +103,7 @@ namespace _2D_Monogame_Individual_Project
                     scale = 1.0f,
                 }
             };
+
             x = walls[0].sprite.rect.Left;
             y = walls[0].sprite.rect.Bottom;
             walls[2] = new Wall(this)
@@ -97,12 +115,13 @@ namespace _2D_Monogame_Individual_Project
                             y,
                             walls[1].sprite.rect.X - (x - wallThickness),
                             wallThickness
-                            
+
                        ),
                     rotation = 0.0f,
                     scale = 1.0f,
                 }
             };
+
             x = walls[2].sprite.rect.X;
             y = walls[2].sprite.rect.Y - walls[0].sprite.rect.Height;
             walls[3] = new Wall(this)
@@ -120,6 +139,8 @@ namespace _2D_Monogame_Individual_Project
                 }
             };
 
+            x = walls[2].sprite.rect.X;
+            y = walls[2].sprite.rect.Y - walls[0].sprite.rect.Height;
             walls[4] = new Wall(this)
             {
                 sprite = new SpriteData
@@ -205,14 +226,11 @@ namespace _2D_Monogame_Individual_Project
                 }
             };
 
-            Components.Add(ball);
+            foreach (Wall wall in walls)
+            {
+                Components.Add(wall);
+            }
 
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-            Services.AddService(typeof(SpriteBatch), _spriteBatch);
-
-            ball.Setup(_frame, rnd);
-
-            base.LoadContent();
         }
 
         protected override void Update(GameTime gameTime)
