@@ -141,56 +141,70 @@ namespace _2D_Monogame_Individual_Project
                     scale = 1.0f,
                 };
 
+            x = walls[4].sprite.rect.Left;
+            y = walls[4].sprite.rect.Bottom;
             walls[5].sprite = new SpriteData
             {
                 rect = new Rectangle(
-                            (int)(_frame.center.X - 20 - wallThickness),
-                            (int)(_frame.center.Y - 5 - wallThickness),
-                            10,
+                            x,
+                            y,
+                            10 * minLength,
                             wallThickness
                        ),
                 rotation = 0.0f,
                 scale = 1.0f,
             };
+
+            x = walls[1].sprite.rect.Left;
+            y = walls[1].sprite.rect.Top;
             walls[6].sprite = new SpriteData
             {
                 rect = new Rectangle(
-                            (int)(_frame.center.X - 20 - wallThickness),
-                            (int)(_frame.center.Y - 5 - wallThickness),
-                            10,
+                            x,
+                            y,
+                            7 * minLength,
                             wallThickness
                        ),
                 rotation = 0.0f,
                 scale = 1.0f,
             };
+
+            x = walls[5].sprite.rect.Right - 3;
+            y = walls[5].sprite.rect.Top + 2;
             walls[7].sprite = new SpriteData
             {
                 rect = new Rectangle(
-                            (int)(_frame.center.X - 20 - wallThickness),
-                            (int)(_frame.center.Y - 5 - wallThickness),
-                            10,
-                            wallThickness
+                            x,
+                            y,
+                            wallThickness,
+                            walls[0].sprite.rect.Height
                        ),
-                rotation = 0.0f,
+                rotation = MathHelper.ToRadians(-30),
                 scale = 1.0f,
             };
+
+            x = walls[6].sprite.rect.Right - 3;
+            y = walls[6].sprite.rect.Top + 2;
             walls[8].sprite = new SpriteData
             {
                 rect = new Rectangle(
-                            (int)(_frame.center.X - 20 - wallThickness),
-                            (int)(_frame.center.Y - 5 - wallThickness),
-                            10,
-                            wallThickness
+                            x,
+                            y,
+                            wallThickness,
+                            walls[1].sprite.rect.Height + (int)(walls[4].sprite.rect.Height - .2 * minLength)
                        ),
-                rotation = 0.0f,
+                rotation = MathHelper.ToRadians(30),
                 scale = 1.0f,
             };
+
+            x = walls[8].sprite.rect.Left;
+            y = walls[8].sprite.rect.Bottom;
             walls[9].sprite = new SpriteData
             {
                 rect = new Rectangle(
-                            (int)(_frame.center.X - 20 - wallThickness),
-                            (int)(_frame.center.Y - 5 - wallThickness),
-                            10,
+                            x,
+                            y,
+                            walls[7].sprite.rect.Right,
                             wallThickness
                        ),
                 rotation = 0.0f,
