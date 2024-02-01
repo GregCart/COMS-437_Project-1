@@ -42,8 +42,11 @@ namespace _2D_Monogame_Individual_Project
             rnd = new Random();
 
             Components.Add(ball);
-            
-
+            for (int i = 0; i < 10; i++)
+            {
+                walls[i] = new Wall(this);
+                Components.Add(walls[i]);
+            }
 
             base.Initialize();
         }
@@ -58,8 +61,6 @@ namespace _2D_Monogame_Individual_Project
             _frame.lowerLeft = new Vector2(5, GraphicsDevice.Viewport.Height - 5);
             _frame.lowerRight = new Vector2(GraphicsDevice.Viewport.Width - 5, GraphicsDevice.Viewport.Height - 5);
             _frame.center = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
-
-            base.LoadContent();
 
             ball.Setup(_frame, rnd);
 
@@ -227,10 +228,7 @@ namespace _2D_Monogame_Individual_Project
                 }
             };
 
-            foreach (Wall wall in walls)
-            {
-                Components.Add(wall);
-            }
+            base.LoadContent();
         }
 
         protected override void Update(GameTime gameTime)

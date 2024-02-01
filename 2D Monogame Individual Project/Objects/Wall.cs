@@ -34,7 +34,7 @@ namespace Objects
         {
             if (tex == null)
             {
-                tex = Game.Content.Load<Texture2D>("COMS_437-Project_1-ColorStrip");
+                tex = Game.Content.Load<Texture2D>("Textures/COMS_437-Project_1-ColorStrip");
             }
 
             sprite.tex = tex;
@@ -44,7 +44,7 @@ namespace Objects
 
         public override void Draw(GameTime gameTime)
         {
-            ((SpriteBatch)Game.Services.GetService(typeof(SpriteBatch))).Draw(tex, sprite.loc, Color.White);
+            ((SpriteBatch)Game.Services.GetService(typeof(SpriteBatch))).Draw(sprite.tex, sprite.loc, null, Color.White, sprite.rotation, Vector2.Zero, sprite.scale, SpriteEffects.None, 0.0f);
 
             base.Draw(gameTime);
         }
