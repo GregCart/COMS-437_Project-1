@@ -14,7 +14,6 @@ namespace _2D_Monogame_Individual_Project
         private SpriteBatch _spriteBatch;
         private Texture2D _wallTexture;
         private Random rnd;
-        private Rectangle _wallColor;
 
         private Frame2D _frame;
         private Wall[] walls;
@@ -35,7 +34,6 @@ namespace _2D_Monogame_Individual_Project
             _frame = new Frame2D();
             walls = new Wall[10];
             wallThickness = 4;
-            _wallColor = new Rectangle(2, 0, 1, 1);
 
             ball = new Ball(this);
 
@@ -64,19 +62,17 @@ namespace _2D_Monogame_Individual_Project
 
             ball.Setup(_frame, rnd);
 
-            ball.sprite.loc = new Vector2(
+            /*ball.sprite.loc = new Vector2(
                 (float)((rnd.NextDouble() * ((_frame.upperRight.X - _frame.upperLeft.X) - ball.sprite.tex.Width)) + _frame.upperLeft.X),
                 (float)((rnd.NextDouble() * ((_frame.lowerRight.Y - _frame.upperRight.Y) - ball.sprite.tex.Height)) + _frame.upperRight.Y));
             ball.vel = new Vector2(-3, 1);
-            ball.sprite.scale = .1f;
+            ball.sprite.scale = .1f;*/
             
             minLength = (int) ball.sprite.size().Length() + 1;
 
             int x = (int)(_frame.center.X - 300 - wallThickness);
             int y = (int)(_frame.center.Y - 150);
-            walls[0] = new Wall(this)
-            {
-                sprite = new SpriteData
+            walls[0].sprite = new SpriteData
                 {
                     rect = new Rectangle(
                             x,
@@ -86,14 +82,11 @@ namespace _2D_Monogame_Individual_Project
                        ),
                     rotation = 0.0f,
                     scale = 1.0f,
-                }
-            };
+                };
 
             x = (int)(_frame.center.X - 70 - wallThickness);
             y = (int)(_frame.center.Y - 90 + minLength);
-            walls[1] = new Wall(this)
-            {
-                sprite = new SpriteData
+            walls[1].sprite = new SpriteData
                 {
                     rect = new Rectangle(
                             x,
@@ -103,14 +96,11 @@ namespace _2D_Monogame_Individual_Project
                        ),
                     rotation = 0.0f,
                     scale = 1.0f,
-                }
-            };
+                };
 
             x = walls[0].sprite.rect.Left;
             y = walls[0].sprite.rect.Bottom;
-            walls[2] = new Wall(this)
-            {
-                sprite = new SpriteData
+            walls[2].sprite = new SpriteData
                 {
                     rect = new Rectangle(
                             x,
@@ -121,14 +111,11 @@ namespace _2D_Monogame_Individual_Project
                        ),
                     rotation = 0.0f,
                     scale = 1.0f,
-                }
             };
 
             x = walls[2].sprite.rect.X;
             y = walls[2].sprite.rect.Y - walls[0].sprite.rect.Height;
-            walls[3] = new Wall(this)
-            {
-                sprite = new SpriteData
+            walls[3].sprite = new SpriteData
                 {
                     rect = new Rectangle(
                             x,
@@ -138,94 +125,76 @@ namespace _2D_Monogame_Individual_Project
                        ),
                     rotation = 0.0f,
                     scale = 1.0f,
-                }
-            };
+                };
 
-            x = walls[2].sprite.rect.X;
-            y = walls[2].sprite.rect.Y - walls[0].sprite.rect.Height;
-            walls[4] = new Wall(this)
-            {
-                sprite = new SpriteData
+            x = walls[1].sprite.rect.X;
+            y = walls[0].sprite.rect.Y;
+            walls[4].sprite = new SpriteData
                 {
                     rect = new Rectangle(
+                            x,
+                            y,
+                            wallThickness,
+                            walls[0].sprite.rect.Height - walls[1].sprite.rect.Height - 2 * minLength
+                       ),
+                    rotation = 0.0f,
+                    scale = 1.0f,
+                };
+
+            walls[5].sprite = new SpriteData
+            {
+                rect = new Rectangle(
                             (int)(_frame.center.X - 20 - wallThickness),
                             (int)(_frame.center.Y - 5 - wallThickness),
                             10,
                             wallThickness
                        ),
-                    rotation = 0.0f,
-                    scale = 1.0f,
-                }
+                rotation = 0.0f,
+                scale = 1.0f,
             };
-            walls[5] = new Wall(this)
+            walls[6].sprite = new SpriteData
             {
-                sprite = new SpriteData
-                {
-                    rect = new Rectangle(
+                rect = new Rectangle(
                             (int)(_frame.center.X - 20 - wallThickness),
                             (int)(_frame.center.Y - 5 - wallThickness),
                             10,
                             wallThickness
                        ),
-                    rotation = 0.0f,
-                    scale = 1.0f,
-                }
+                rotation = 0.0f,
+                scale = 1.0f,
             };
-            walls[6] = new Wall(this)
+            walls[7].sprite = new SpriteData
             {
-                sprite = new SpriteData
-                {
-                    rect = new Rectangle(
+                rect = new Rectangle(
                             (int)(_frame.center.X - 20 - wallThickness),
                             (int)(_frame.center.Y - 5 - wallThickness),
                             10,
                             wallThickness
                        ),
-                    rotation = 0.0f,
-                    scale = 1.0f,
-                }
+                rotation = 0.0f,
+                scale = 1.0f,
             };
-            walls[7] = new Wall(this)
+            walls[8].sprite = new SpriteData
             {
-                sprite = new SpriteData
-                {
-                    rect = new Rectangle(
+                rect = new Rectangle(
                             (int)(_frame.center.X - 20 - wallThickness),
                             (int)(_frame.center.Y - 5 - wallThickness),
                             10,
                             wallThickness
                        ),
-                    rotation = 0.0f,
-                    scale = 1.0f,
-                }
+                rotation = 0.0f,
+                scale = 1.0f,
             };
-            walls[8] = new Wall(this)
+            walls[9].sprite = new SpriteData
             {
-                sprite = new SpriteData
-                {
-                    rect = new Rectangle(
+                rect = new Rectangle(
                             (int)(_frame.center.X - 20 - wallThickness),
                             (int)(_frame.center.Y - 5 - wallThickness),
                             10,
                             wallThickness
                        ),
-                    rotation = 0.0f,
-                    scale = 1.0f,
-                }
-            };
-            walls[9] = new Wall(this)
-            {
-                sprite = new SpriteData
-                {
-                    rect = new Rectangle(
-                            (int)(_frame.center.X - 20 - wallThickness),
-                            (int)(_frame.center.Y - 5 - wallThickness),
-                            10,
-                            wallThickness
-                       ),
-                    rotation = 0.0f,
-                    scale = 1.0f,
-                }
+                rotation = 0.0f,
+                scale = 1.0f,
             };
 
             base.LoadContent();

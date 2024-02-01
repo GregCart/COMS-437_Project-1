@@ -23,7 +23,7 @@ namespace Objects
                 (float)(rnd.NextDouble() * (frame.upperRight.X - frame.upperLeft.X - sprite.tex.Width) + frame.upperLeft.X),
                 (float)(rnd.NextDouble() * (frame.lowerRight.Y - frame.upperRight.Y - sprite.tex.Height) + frame.upperRight.Y));
             vel = new Vector2(-3, 1);
-            sprite.scale = 1f;
+            sprite.scale = .1f;
 
             return this;
         }

@@ -11,6 +11,7 @@ namespace Objects
     internal class Wall : DrawableGameComponent
     {
         public static Texture2D tex;
+        public static Rectangle wallColor;
 
         public SpriteData sprite;
         public float angle;
@@ -36,6 +37,10 @@ namespace Objects
             {
                 tex = Game.Content.Load<Texture2D>("Textures/COMS_437-Project_1-ColorStrip");
             }
+            if (wallColor == null)
+            {
+                wallColor = new Rectangle(2, 0, 1, 1);
+            }
 
             sprite.tex = tex;
 
@@ -44,7 +49,7 @@ namespace Objects
 
         public override void Draw(GameTime gameTime)
         {
-            ((SpriteBatch)Game.Services.GetService(typeof(SpriteBatch))).Draw(sprite.tex, sprite.loc, null, Color.White, sprite.rotation, Vector2.Zero, sprite.scale, SpriteEffects.None, 0.0f);
+            ((SpriteBatch)Game.Services.GetService(typeof(SpriteBatch))).Draw(tex, sprite.rect, wallColor, Color.White, sprite.rotation, Vector2.Zero, SpriteEffects.None, 0.0f);
 
             base.Draw(gameTime);
         }
