@@ -1,10 +1,10 @@
-﻿using _2D_Monogame_Individual_Project.Content;
-using static _2D_Monogame_Individual_Project.Content.Helpers;
+﻿using static Objects.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Diagnostics;
+using Objects;
 
 namespace _2D_Monogame_Individual_Project
 {
@@ -41,6 +41,9 @@ namespace _2D_Monogame_Individual_Project
 
             rnd = new Random();
 
+            Components.Add(ball);
+            
+
 
             base.Initialize();
         }
@@ -49,8 +52,6 @@ namespace _2D_Monogame_Individual_Project
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             Services.AddService(typeof(SpriteBatch), _spriteBatch);
-
-            Components.Add(ball);
 
             _frame.upperLeft = new Vector2(5, 5);
             _frame.upperRight = new Vector2(GraphicsDevice.Viewport.Width - 5, 5);
@@ -230,7 +231,6 @@ namespace _2D_Monogame_Individual_Project
             {
                 Components.Add(wall);
             }
-
         }
 
         protected override void Update(GameTime gameTime)

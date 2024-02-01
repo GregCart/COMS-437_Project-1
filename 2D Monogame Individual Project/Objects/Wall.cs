@@ -1,5 +1,4 @@
-﻿using _2D_Monogame_Individual_Project.Content;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -7,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _2D_Monogame_Individual_Project.Content
+namespace Objects
 {
-    internal class Wall:DrawableGameComponent
+    internal class Wall : DrawableGameComponent
     {
         public static Texture2D tex;
 
@@ -23,7 +22,7 @@ namespace _2D_Monogame_Individual_Project.Content
 
         public Wall(Game game, int x, int y, int w, int h, int r, int s) : base(game)
         {
-            this.sprite = new SpriteData
+            sprite = new SpriteData
             {
                 rect = new Rectangle(x, y, w, h),
                 rotation = r,
@@ -38,7 +37,7 @@ namespace _2D_Monogame_Individual_Project.Content
                 tex = Game.Content.Load<Texture2D>("COMS_437-Project_1-ColorStrip");
             }
 
-            this.sprite.tex = tex;
+            sprite.tex = tex;
 
             base.LoadContent();
         }

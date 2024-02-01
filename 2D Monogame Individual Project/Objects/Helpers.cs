@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _2D_Monogame_Individual_Project.Content
+namespace Objects
 {
     public static class Helpers
     {
