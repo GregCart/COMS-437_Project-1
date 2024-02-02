@@ -179,7 +179,7 @@ namespace _2D_Monogame_Individual_Project
                             wallThickness,
                             walls[0].sprite.rect.Height
                        ),
-                rotation = MathHelper.ToRadians(-30),
+                rotation = MathHelper.ToRadians(330),
                 scale = 1.0f,
             };
 
@@ -197,14 +197,21 @@ namespace _2D_Monogame_Individual_Project
                 scale = 1.0f,
             };
 
-            x = walls[8].sprite.rect.Left;
-            y = walls[8].sprite.rect.Bottom;
+            var ang = walls[8].sprite.rotation; 
+            ang = (float)(2 * Math.PI - ang);
+            ang = (float)(Math.PI / 2 - ang);
+            var dist = walls[8].sprite.rect.Height;
+            x = (int)(Math.Cos(ang) * dist) + walls[8].sprite.rect.X;
+            y = (int)(Math.Sin(ang) * dist) + walls[8].sprite.rect.Y;
+            ang = walls[7].sprite.rotation;
+            ang = (float)(2 * Math.PI - ang);
+            ang = (float)(Math.PI / 2 - ang);
             walls[9].sprite = new SpriteData
             {
                 rect = new Rectangle(
                             x,
                             y,
-                            walls[7].sprite.rect.Right,
+                            (int)(Math.Cos(ang) * dist) + walls[7].sprite.rect.X,
                             wallThickness
                        ),
                 rotation = 0.0f,
