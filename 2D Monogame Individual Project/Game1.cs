@@ -204,7 +204,7 @@ namespace _2D_Monogame_Individual_Project
             x = (int)(Math.Cos(ang) * dist) + walls[8].sprite.rect.X;
             y = (int)(Math.Sin(ang) * dist) + walls[8].sprite.rect.Y;
             ang = walls[7].sprite.rotation;
-            ang = (float)(2 * Math.PI - ang);
+            //ang = (float)(2 * Math.PI - ang);
             ang = (float)(Math.PI / 2 - ang);
             walls[9].sprite = new SpriteData
             {
