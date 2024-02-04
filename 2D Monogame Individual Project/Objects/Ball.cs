@@ -13,16 +13,15 @@ namespace Objects
         public static Texture2D tex;
         public SpriteData sprite;
         public Vector2 vel;
+        public Vector2 nextPos;
 
 
         public Ball(Game game) : base(game) { }
 
         public Ball Setup(Frame2D frame, Random rnd)
         {
-            sprite.loc = new Vector2(
-                (float)(rnd.NextDouble() * (frame.upperRight.X - frame.upperLeft.X - sprite.tex.Width) + frame.upperLeft.X),
-                (float)(rnd.NextDouble() * (frame.lowerRight.Y - frame.upperRight.Y - sprite.tex.Height) + frame.upperRight.Y));
-            vel = new Vector2(-3, 1);
+            sprite.loc = new Vector2(frame.center.X, frame.center.Y);
+            vel = new Vector2(0, 0);
             sprite.scale = .1f;
 
             return this;
@@ -42,7 +41,7 @@ namespace Objects
 
         public override void Update(GameTime gameTime)
         {
-            //handle Ball Position updates
+            this.nextPos = this.sprite.loc + vel;
 
             base.Update(gameTime);
         }

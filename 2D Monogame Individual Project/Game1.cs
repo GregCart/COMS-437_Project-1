@@ -1,9 +1,9 @@
 ﻿using static Objects.Helpers;
+using static Objects.EWallSide;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.Diagnostics;
 using Objects;
 
 namespace _2D_Monogame_Individual_Project
@@ -83,6 +83,7 @@ namespace _2D_Monogame_Individual_Project
                     rotation = 0.0f,
                     scale = 1.0f,
                 };
+            walls[0].sides = new EWallSide[] { LEFT };
 
             x = (int)(_frame.center.X - 70 - wallThickness);
             y = (int)(_frame.center.Y - 90 + minLength);
@@ -97,6 +98,7 @@ namespace _2D_Monogame_Individual_Project
                     rotation = 0.0f,
                     scale = 1.0f,
                 };
+            walls[1].sides = new EWallSide[] { RIGHT };
 
             x = walls[0].sprite.rect.Left;
             y = walls[0].sprite.rect.Bottom;
@@ -112,6 +114,7 @@ namespace _2D_Monogame_Individual_Project
                     rotation = 0.0f,
                     scale = 1.0f,
             };
+            walls[2].sides = new EWallSide[] { BOTTOM };
 
             x = walls[2].sprite.rect.X;
             y = walls[2].sprite.rect.Y - walls[0].sprite.rect.Height;
@@ -126,6 +129,7 @@ namespace _2D_Monogame_Individual_Project
                     rotation = 0.0f,
                     scale = 1.0f,
                 };
+            walls[3].sides = new EWallSide[] { TOP };
 
             x = walls[1].sprite.rect.X;
             y = walls[0].sprite.rect.Y;
@@ -140,6 +144,7 @@ namespace _2D_Monogame_Individual_Project
                     rotation = 0.0f,
                     scale = 1.0f,
                 };
+            walls[4].sides = new EWallSide[] { RIGHT };
 
             x = walls[4].sprite.rect.Left;
             y = walls[4].sprite.rect.Bottom;
@@ -154,6 +159,7 @@ namespace _2D_Monogame_Individual_Project
                 rotation = 0.0f,
                 scale = 1.0f,
             };
+            walls[5].sides = new EWallSide[] { TOP };
 
             x = walls[1].sprite.rect.Left;
             y = walls[1].sprite.rect.Top;
@@ -168,6 +174,7 @@ namespace _2D_Monogame_Individual_Project
                 rotation = 0.0f,
                 scale = 1.0f,
             };
+            walls[6].sides = new EWallSide[] { BOTTOM };
 
             x = walls[5].sprite.rect.Right - 3;
             y = walls[5].sprite.rect.Top + 2;
@@ -182,6 +189,7 @@ namespace _2D_Monogame_Individual_Project
                 rotation = MathHelper.ToRadians(330),
                 scale = 1.0f,
             };
+            walls[7].sides = new EWallSide[] { RIGHT, TOP };
 
             x = walls[6].sprite.rect.Right - 3;
             y = walls[6].sprite.rect.Top + 2;
@@ -196,6 +204,7 @@ namespace _2D_Monogame_Individual_Project
                 rotation = MathHelper.ToRadians(30),
                 scale = 1.0f,
             };
+            walls[8].sides = new EWallSide[] { LEFT, TOP };
 
             var ang = walls[8].sprite.rotation; 
             ang = (float)(2 * Math.PI - ang);
@@ -217,6 +226,7 @@ namespace _2D_Monogame_Individual_Project
                 rotation = 0.0f,
                 scale = 1.0f,
             };
+            walls[9].sides = new EWallSide[] { BOTTOM };
 
             base.LoadContent();
         }
@@ -226,7 +236,17 @@ namespace _2D_Monogame_Individual_Project
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 Exit();
 
+            this.BoundsCheck();
 
+            base.Update(gameTime);
+
+            ball.sprite.loc = ball.nextPos;
+
+
+        }
+
+        public void BoundsCheck()
+        {
             if (ball.sprite.loc.Y <= _frame.upperLeft.Y)
             {
                 ball.vel = Vector2.Reflect(ball.vel, Vector2.UnitY);
@@ -267,16 +287,6 @@ namespace _2D_Monogame_Individual_Project
 
                 ball.vel = Vector2.Reflect(ball.vel, norm);
             }
-
-            foreach (Wall wall in walls)
-            {
-                
-            }
-
-            ball.sprite.loc += ball.vel;
-
-
-            base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)

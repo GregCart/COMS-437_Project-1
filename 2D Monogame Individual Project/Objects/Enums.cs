@@ -14,4 +14,13 @@ namespace Objects
         LOWER_RIGHT,
         num_types_corners
     }
+
+    public enum EWallSide
+    {
+        LEFT,
+        RIGHT,
+        TOP,
+        BOTTOM,
+        num_types_wall_side
+    }
 }
