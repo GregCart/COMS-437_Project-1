@@ -20,51 +20,27 @@ namespace Objects
             if (Max(from1.X, to1.X) < Min(from2.X, to2.X)) {
                 return false;
             }
+
+            //line 2 is vertical
+            if (from2.X == to2.X)
+            {
+                return IntersectsVerticalLine(from2, to2, from1, to1);
+            }
+            //line 2 is horizontal
+            if (from2.Y == to2.Y)
+            {
+                return IntersectsHorizontalLine(from2, to2, from1, to1);
+            }
             //line 1 is vertical
             if (from1.X == to1.X)
             {
-                //if 2 crosses horizontally
-                if ((from2.X < to1.X && to2.X > to1.X) || (from2.X > to1.X && to2.X < to1.X))
-                {
-                    var r1 = Enumerable.Range(from1.Y, to1.Y).ToArray();
-                    var r2 = Enumerable.Range(from2.Y, to2.Y).ToArray();
-
-                    //if 2 matches vertically
-                    if (r1.Max() <= r2.Max() && r1.Min() >= r2.Min())
-                    {
-                        return true;
-                    } else { 
-                        return false; 
-                    }
-                } else {
-                    return false;
-                }
+                return IntersectsVerticalLine(from1, to1, from2, to2);
             }
             //line 1 is horizontal
             if (from1.Y == to1.Y)
             {
-                //if 2 crosses vertically
-                if ((from2.Y < to1.Y && to2.Y > to1.Y) || (from2.Y > to1.Y && to2.Y < to1.Y))
-                {
-                    var r1 = Enumerable.Range(from1.X, to1.X).ToArray();
-                    var r2 = Enumerable.Range(from2.X, to2.X).ToArray();
-
-                    //if 2 matches horizontally
-                    if (r1.Max() <= r2.Max() && r1.Min() >= r2.Min())
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    return false;
-                }
+                return IntersectsHorizontalLine(from1, to1, from2, to2);
             }
-
 
             var A1 = (from1.Y - to1.Y) / (from1.X - to1.X);
             var A2 = (from2.Y - to2.Y) / (from2.X - to2.X);
@@ -83,6 +59,54 @@ namespace Objects
                 return false;
             } else {
                 return true;
+            }
+        }
+
+        public  static bool IntersectsHorizontalLine(Point hLineFrom, Point hLineTo, Point fromLine, Point toLine)
+        {
+            //if line crosses vertically
+            if ((fromLine.Y < hLineTo.Y && toLine.Y > hLineTo.Y) || (fromLine.Y > hLineTo.Y && toLine.Y < hLineTo.Y))
+            {
+                var r1 = Enumerable.Range(hLineFrom.X, hLineTo.X).ToArray();
+                var r2 = Enumerable.Range(fromLine.X, toLine.X).ToArray();
+
+                //if line matches horizontally
+                if (r1.Max() <= r2.Max() && r1.Min() >= r2.Min())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static bool IntersectsVerticalLine(Point vLineFrom, Point vLineTo, Point fromLine, Point toLine)
+        {
+            //if line crosses horizontally
+            if ((fromLine.X < vLineTo.X && toLine.X > vLineTo.X) || (fromLine.X > vLineTo.X && toLine.X < vLineTo.X))
+            {
+                var r1 = Enumerable.Range(vLineFrom.Y, vLineTo.Y).ToArray();
+                var r2 = Enumerable.Range(fromLine.Y, toLine.Y).ToArray();
+
+                //if line matches vertically
+                if (r1.Max() <= r2.Max() && r1.Min() >= r2.Min())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
             }
         }
     }

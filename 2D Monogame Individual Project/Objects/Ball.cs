@@ -21,7 +21,7 @@ namespace Objects
         public Ball Setup(Frame2D frame, Random rnd)
         {
             sprite.loc = new Vector2(frame.center.X, frame.center.Y);
-            vel = new Vector2(0, 0);
+            vel = new Vector2(1, 1);
             sprite.scale = .1f;
 
             return this;

@@ -71,39 +71,40 @@ namespace Objects
                 if (!Intersects(ball.sprite.loc.ToPoint(), ball.nextPos.ToPoint(), pos.ToPoint(), end.ToPoint()))
                 {
                     continue;
-                }
-                switch (w)
-                {
-                    case EWallSide.LEFT:
-                        if (ball.nextPos.X <= this.sprite.rect.X)
-                        {
-                            ball.vel = Vector2.Reflect(ball.vel, Vector2.UnitY);
-                            ball.nextPos.X = this.sprite.rect.X;
-                        }
-                        break;
-                    case EWallSide.RIGHT:
-                        if (ball.nextPos.X >= this.sprite.rect.X)
-                        {
-                            ball.vel = Vector2.Reflect(ball.vel, Vector2.UnitY);
-                            ball.nextPos.X = this.sprite.rect.X;
-                        }
-                        break;
-                    case EWallSide.TOP:
-                        if (ball.nextPos.Y >= this.sprite.rect.Y)
-                        {
-                            ball.vel = Vector2.Reflect(ball.vel, Vector2.UnitX);
-                            ball.nextPos.Y = this.sprite.rect.Y;
-                        }
-                        break;
-                    case EWallSide.BOTTOM:
-                        if (ball.nextPos.Y <= this.sprite.rect.Y)
-                        {
-                            ball.vel = Vector2.Reflect(ball.vel, Vector2.UnitX);
-                            ball.nextPos.Y = this.sprite.rect.Y;
-                        }
-                        break;
-                    default:
-                        break;
+                } else {
+                    switch (w)
+                    {
+                        case EWallSide.LEFT:
+                            if (ball.nextPos.X <= this.sprite.rect.X)
+                            {
+                                ball.vel = Vector2.Reflect(ball.vel, Vector2.UnitY);
+                                ball.nextPos.X = this.sprite.rect.X;
+                            }
+                            break;
+                        case EWallSide.RIGHT:
+                            if (ball.nextPos.X >= this.sprite.rect.X)
+                            {
+                                ball.vel = Vector2.Reflect(ball.vel, Vector2.UnitY);
+                                ball.nextPos.X = this.sprite.rect.X;
+                            }
+                            break;
+                        case EWallSide.TOP:
+                            if (ball.nextPos.Y >= this.sprite.rect.Y)
+                            {
+                                ball.vel = Vector2.Reflect(ball.vel, Vector2.UnitX);
+                                ball.nextPos.Y = this.sprite.rect.Y;
+                            }
+                            break;
+                        case EWallSide.BOTTOM:
+                            if (ball.nextPos.Y <= this.sprite.rect.Y)
+                            {
+                                ball.vel = Vector2.Reflect(ball.vel, Vector2.UnitX);
+                                ball.nextPos.Y = this.sprite.rect.Y;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 
