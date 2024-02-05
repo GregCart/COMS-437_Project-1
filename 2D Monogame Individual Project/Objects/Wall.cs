@@ -57,11 +57,12 @@ namespace Objects
         public override void Update(GameTime gameTime)
         {
             Ball ball = ((Ball)Game.Components.First());
+            //switch to using clamp for detection
             Vector2 pos = new Vector2(this.sprite.rect.X, this.sprite.rect.Y);
             var ang = this.sprite.rotation;
             ang = (float)(2 * Math.PI - ang);
             ang = (float)(Math.PI / 2 - ang);
-            var dist = this.sprite.rect.Height;
+            var dist = MathF.Max(this.sprite.rect.Height, this.sprite.rect.Width);
             var x = (int)(Math.Cos(ang) * dist) + this.sprite.rect.X;
             var y = (int)(Math.Sin(ang) * dist) + this.sprite.rect.Y;
             Vector2 end = new Vector2(x, y);
