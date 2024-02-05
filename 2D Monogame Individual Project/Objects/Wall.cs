@@ -15,6 +15,7 @@ namespace Objects
         public static Rectangle wallColor;
 
         public SpriteData sprite;
+        public bool rotatedY = false; 
         public EWallSide[] sides;
         public float angle;
 
@@ -68,7 +69,7 @@ namespace Objects
 
             foreach (EWallSide w in this.sides)
             {
-                if (!Intersects(ball.sprite.loc.ToPoint(), ball.nextPos.ToPoint(), pos.ToPoint(), end.ToPoint()))
+                if (!doIntersect(ball.sprite.loc.ToPoint(), ball.nextPos.ToPoint(), pos.ToPoint(), end.ToPoint()))
                 {
                     continue;
                 } else {

@@ -61,12 +61,6 @@ namespace _2D_Monogame_Individual_Project
             _frame.center = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
 
             ball.Setup(_frame, rnd);
-
-            /*ball.sprite.loc = new Vector2(
-                (float)((rnd.NextDouble() * ((_frame.upperRight.X - _frame.upperLeft.X) - ball.sprite.tex.Width)) + _frame.upperLeft.X),
-                (float)((rnd.NextDouble() * ((_frame.lowerRight.Y - _frame.upperRight.Y) - ball.sprite.tex.Height)) + _frame.upperRight.Y));
-            ball.vel = new Vector2(-3, 1);
-            ball.sprite.scale = .1f;*/
             
             minLength = (int) ball.sprite.size().Length() + 1;
 
@@ -186,10 +180,11 @@ namespace _2D_Monogame_Individual_Project
                             wallThickness,
                             walls[0].sprite.rect.Height
                        ),
-                rotation = MathHelper.ToRadians(330),
+                rotation = MathHelper.ToRadians(-30),
                 scale = 1.0f,
             };
             walls[7].sides = new EWallSide[] { RIGHT, TOP };
+            walls[7].rotatedY = true;
 
             x = walls[6].sprite.rect.Right - 3;
             y = walls[6].sprite.rect.Top + 2;
@@ -205,22 +200,19 @@ namespace _2D_Monogame_Individual_Project
                 scale = 1.0f,
             };
             walls[8].sides = new EWallSide[] { LEFT, TOP };
+            walls[8].rotatedY = true;
 
-            var ang = walls[8].sprite.rotation; 
-            ang = (float)(2 * Math.PI - ang);
-            ang = (float)(Math.PI / 2 - ang);
+            var ang = walls[8].sprite.rotation;
             var dist = walls[8].sprite.rect.Height;
-            x = (int)(Math.Cos(ang) * dist) + walls[8].sprite.rect.X;
-            y = (int)(Math.Sin(ang) * dist) + walls[8].sprite.rect.Y;
+            y = (int)(Math.Cos(ang) * dist) + walls[8].sprite.rect.Y;
+            x = (int)(Math.Sin(ang) * dist) + walls[8].sprite.rect.X;
             ang = walls[7].sprite.rotation;
-            //ang = (float)(2 * Math.PI - ang);
-            ang = (float)(Math.PI / 2 - ang);
             walls[9].sprite = new SpriteData
             {
                 rect = new Rectangle(
                             x,
                             y,
-                            (int)(Math.Cos(ang) * dist) + walls[7].sprite.rect.X,
+                            (int)(Math.Cos(ang) * dist + walls[7].sprite.rect.X),
                             wallThickness
                        ),
                 rotation = 0.0f,
@@ -238,11 +230,9 @@ namespace _2D_Monogame_Individual_Project
 
             this.BoundsCheck();
 
-            base.Update(gameTime);
-
             ball.sprite.loc = ball.nextPos;
 
-
+            base.Update(gameTime);
         }
 
         public void BoundsCheck()
