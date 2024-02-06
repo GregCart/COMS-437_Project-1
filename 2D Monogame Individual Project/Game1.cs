@@ -98,8 +98,8 @@ namespace _2D_Monogame_Individual_Project
             walls[1].sides = new EWallSide[] { RIGHT };
             walls[1].id = wallNum++;
 
-            x = walls[0].sprite.rect.Left;
-            y = walls[0].sprite.rect.Bottom;
+            Point pt = walls[0].endPoint().ToPoint();
+            (x, y) = pt;
             walls[2].sprite = new SpriteData
                 {
                     rect = new Rectangle(
@@ -115,17 +115,18 @@ namespace _2D_Monogame_Individual_Project
             walls[2].sides = new EWallSide[] { BOTTOM };
             walls[2].id = wallNum++;
 
-            x = walls[2].sprite.rect.X;
-            y = walls[2].sprite.rect.Y - walls[0].sprite.rect.Height;
+            pt = walls[2].endPoint().ToPoint();
+            x = pt.X;
+            y = pt.Y - walls[0].sprite.rect.Height;
             walls[3].sprite = new SpriteData
                 {
                     rect = new Rectangle(
                             x,
                             y,
-                            walls[2].sprite.rect.Width,
+                            wallThickness,
                             walls[2].sprite.rect.Height
                        ),
-                    rotation = 0.0f,
+                    rotation = MathHelper.ToRadians(0),
                     scale = 1.0f,
                 };
             walls[3].sides = new EWallSide[] { TOP };
@@ -213,20 +214,18 @@ namespace _2D_Monogame_Individual_Project
             walls[8].rotatedY = true;
             walls[8].id = wallNum++;
 
-            var ang = walls[8].sprite.rotation;
-            var dist = walls[8].sprite.rect.Height;
-            y = (int)(Math.Cos(ang) * dist) + walls[8].sprite.rect.Y;
-            x = (int)(Math.Sin(ang) * dist) + walls[8].sprite.rect.X;
-            ang = walls[7].sprite.rotation;
+            pt = walls[8].endPoint().ToPoint();
+            x = pt.X;
+            y = pt.Y;
             walls[9].sprite = new SpriteData
             {
                 rect = new Rectangle(
                             x,
                             y,
-                            (int)(Math.Cos(ang) * dist + walls[7].sprite.rect.X),
-                            wallThickness
+                            wallThickness,
+                            (int)(Math.Cos(ang) * dist + walls[7].sprite.rect.X)
                        ),
-                rotation = 0.0f,
+                rotation = MathHelper.ToRadians(90),
                 scale = 1.0f,
             };
             walls[9].sides = new EWallSide[] { BOTTOM };

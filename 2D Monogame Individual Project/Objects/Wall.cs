@@ -40,6 +40,16 @@ namespace Objects
             };
         }
 
+        public Vector2 endPoint()
+        {
+            var ang = this.sprite.rotation;
+            var dist = this.sprite.rect.Height;
+            var x = (int)(Math.Sin(ang) * dist) + this.sprite.rect.X;
+            var y = (int)(Math.Cos(ang) * dist) + this.sprite.rect.Y;
+
+            return new Vector2(x, y);
+        }
+
         protected override void LoadContent()
         {
             if (tex == null)
@@ -68,7 +78,7 @@ namespace Objects
             var ang = this.sprite.rotation;
             ang = (float)(2 * Math.PI - ang);
             ang = (float)(Math.PI / 2 - ang);
-            var dist = MathF.Max(this.sprite.rect.Height, this.sprite.rect.Width);
+            var dist = this.sprite.rect.Height;
             var x = (int)(Math.Cos(ang) * dist) + this.sprite.rect.X;
             var y = (int)(Math.Sin(ang) * dist) + this.sprite.rect.Y;
             Vector2 end = new Vector2(x, y);
