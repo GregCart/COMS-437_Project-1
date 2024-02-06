@@ -16,8 +16,8 @@ namespace Objects
 
         public Ball Setup(Frame2D frame, Random rnd)
         {
-            sprite.loc = new Vector2(frame.center.X, frame.center.Y);
-            vel = new Vector2(1, 1);
+            sprite.loc = new Vector2(frame.center.X - 200, frame.center.Y + 100);
+            vel = new Vector2(1, -1);
             sprite.scale = .1f;
             this.nextPos = this.sprite.loc + vel;
 
@@ -38,6 +38,8 @@ namespace Objects
 
         public override void Update(GameTime gameTime)
         {
+            this.sprite.loc = this.nextPos;
+
             this.nextPos = this.sprite.loc + vel;
 
             base.Update(gameTime);
@@ -51,10 +53,10 @@ namespace Objects
 
             var thickness = 2;
             Color color = Color.Red;
-            //from https://stackoverflow.com/questions/72913759/how-can-i-draw-lines-in-monogame
+            #region from https://stackoverflow.com/questions/72913759/how-can-i-draw-lines-in-monogame
             // Create a texture as wide as the distance between two points and as high as
             // the desired thickness of the line.
-            var distance = (int)Vector2.Distance(sprite.loc - (sprite.size() / 2), nextPos);
+            var distance = (int)Vector2.Distance(sprite.loc + (sprite.size() / 2), nextPos);
             var texture = new Texture2D(spriteBatch.GraphicsDevice, distance, thickness);
 
             // Fill texture with given color.
@@ -71,7 +73,7 @@ namespace Objects
 
             spriteBatch.Draw(
                 texture,
-                sprite.loc,
+                sprite.loc + (sprite.size() / 2),
                 null,
                 Color.White,
                 rotation,
@@ -79,6 +81,7 @@ namespace Objects
                 1.0f,
                 SpriteEffects.None,
                 1.0f);
+            #endregion
 
             base.Draw(gameTime);
         }

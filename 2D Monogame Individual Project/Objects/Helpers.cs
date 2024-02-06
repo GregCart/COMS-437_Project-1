@@ -96,7 +96,7 @@ namespace Objects
                 var r2 = Enumerable.Range(fromLine.Y, toLine.Y).ToArray();
 
                 //if line matches vertically
-                if (r1.Max() <= r2.Max() && r1.Min() >= r2.Min())
+                if ((r1.Max() <= r2.Max() && r1.Min() >= r2.Min()) || (r1.Max() >= r2.Max() && r1.Min() <= r2.Min()))
                 {
                     return true;
                 }
@@ -115,7 +115,7 @@ namespace Objects
         #region from geeksforgeeks
         // Given three collinear points p, q, r, the function checks if 
         // point q lies on line segment 'pr' 
-        static Boolean onSegment(Point p, Point q, Point r)
+        static Boolean onSegment(Vector2 p, Vector2 q, Vector2 r)
         {
             if (q.X <= Math.Max(p.X, r.X) && q.X >= Math.Min(p.X, r.X) &&
                 q.Y <= Math.Max(p.Y, r.Y) && q.Y >= Math.Min(p.Y, r.Y))
@@ -129,21 +129,29 @@ namespace Objects
         // 0 --> p, q and r are collinear 
         // 1 --> Clockwise 
         // 2 --> Counterclockwise 
-        static int orientation(Point p, Point q, Point r)
+        static int orientation(Vector2 p, Vector2 q, Vector2 r)
         {
             // See https://www.geeksforgeeks.org/orientation-3-ordered-points/ 
             // for details of below formula. 
-            int val = (q.Y - p.Y) * (r.X - q.X) -
-                    (q.X - p.Y) * (r.Y - q.Y);
+            float val = (q.Y - p.Y) * (r.X - q.X) -
+                    (q.X - p.X) * (r.Y - q.Y);
 
-            if (val == 0) return 0; // collinear 
+            /*int s1X = (q.X - p.X);
+            if (s1X > 0)
+            {
+                int s1y = (q.Y - p.Y);
+            }
+            */
+
+
+            if (val < 1e-6f) return 0; // collinear 
 
             return (val > 0) ? 1 : 2; // clock or counterclock wise 
         }
 
         // The main function that returns true if line segment 'p1q1' 
         // and 'p2q2' intersect. 
-        public static bool doIntersect(Point p1, Point q1, Point p2, Point q2)
+        public static bool doIntersect(Vector2 p1, Vector2 q1, Vector2 p2, Vector2 q2)
         {
             // Find the four orientations needed for general and 
             // special cases 

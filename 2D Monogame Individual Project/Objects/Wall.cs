@@ -14,6 +14,7 @@ namespace Objects
         public static Texture2D tex;
         public static Rectangle wallColor;
 
+        public int id;
         public SpriteData sprite;
         public bool rotatedY = false; 
         public EWallSide[] sides;
@@ -58,6 +59,10 @@ namespace Objects
         public override void Update(GameTime gameTime)
         {
             Ball ball = ((Ball)Game.Components.First());
+            Vector2 ballDir = ball.vel;
+            Vector2 ballRad = ball.sprite.size() / 2;
+            ballDir.Normalize();
+            Vector2 ballDirPt = ((ball.nextPos + ball.sprite.size() / 2) + (ballRad * ballDir));
             //switch to using clamp for detection
             Vector2 pos = new Vector2(this.sprite.rect.X, this.sprite.rect.Y);
             var ang = this.sprite.rotation;
@@ -70,38 +75,34 @@ namespace Objects
 
             foreach (EWallSide w in this.sides)
             {
-                if (!doIntersect(ball.sprite.loc.ToPoint(), ball.nextPos.ToPoint(), pos.ToPoint(), end.ToPoint()))
+                if (!doIntersect(ball.sprite.loc + ballRad, ball.nextPos+(ballRad * ballDir), pos, end))
                 {
                     continue;
                 } else {
                     switch (w)
                     {
                         case EWallSide.LEFT:
-                            if (ball.nextPos.X <= this.sprite.rect.X)
+                            if ((ballDirPt + ballDir).X <= this.sprite.rect.X)
                             {
                                 ball.vel = Vector2.Reflect(ball.vel, Vector2.UnitY);
-                                ball.nextPos.X = this.sprite.rect.X;
                             }
                             break;
                         case EWallSide.RIGHT:
-                            if (ball.nextPos.X >= this.sprite.rect.X)
+                            if ((ballDirPt + ballDir).X >= this.sprite.rect.X)
                             {
                                 ball.vel = Vector2.Reflect(ball.vel, Vector2.UnitY);
-                                ball.nextPos.X = this.sprite.rect.X;
                             }
                             break;
                         case EWallSide.TOP:
-                            if (ball.nextPos.Y >= this.sprite.rect.Y)
+                            if ((ballDirPt + ballDir).Y <= this.sprite.rect.Y)
                             {
-                                ball.vel = Vector2.Reflect(ball.vel, Vector2.UnitX);
-                                ball.nextPos.Y = this.sprite.rect.Y;
+                                ball.vel = Vector2.Reflect(ball.vel, -Vector2.UnitX);
                             }
                             break;
                         case EWallSide.BOTTOM:
-                            if (ball.nextPos.Y <= this.sprite.rect.Y)
+                            if ((ballDirPt + ballDir).Y >= this.sprite.rect.Y)
                             {
                                 ball.vel = Vector2.Reflect(ball.vel, Vector2.UnitX);
-                                ball.nextPos.Y = this.sprite.rect.Y;
                             }
                             break;
                         default:

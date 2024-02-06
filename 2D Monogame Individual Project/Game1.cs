@@ -64,6 +64,8 @@ namespace _2D_Monogame_Individual_Project
             
             minLength = (int) ball.sprite.size().Length() + 1;
 
+            int wallNum = 0;
+
             int x = (int)(_frame.center.X - 300 - wallThickness);
             int y = (int)(_frame.center.Y - 150);
             walls[0].sprite = new SpriteData
@@ -78,6 +80,7 @@ namespace _2D_Monogame_Individual_Project
                     scale = 1.0f,
                 };
             walls[0].sides = new EWallSide[] { LEFT };
+            walls[0].id = wallNum++;
 
             x = (int)(_frame.center.X - 70 - wallThickness);
             y = (int)(_frame.center.Y - 90 + minLength);
@@ -93,6 +96,7 @@ namespace _2D_Monogame_Individual_Project
                     scale = 1.0f,
                 };
             walls[1].sides = new EWallSide[] { RIGHT };
+            walls[1].id = wallNum++;
 
             x = walls[0].sprite.rect.Left;
             y = walls[0].sprite.rect.Bottom;
@@ -101,14 +105,15 @@ namespace _2D_Monogame_Individual_Project
                     rect = new Rectangle(
                             x,
                             y,
-                            walls[1].sprite.rect.X - (x - wallThickness),
-                            wallThickness
+                            wallThickness,
+                            walls[1].sprite.rect.X - (x - wallThickness)
 
                        ),
-                    rotation = 0.0f,
+                    rotation = MathHelper.ToRadians(-90),
                     scale = 1.0f,
             };
             walls[2].sides = new EWallSide[] { BOTTOM };
+            walls[2].id = wallNum++;
 
             x = walls[2].sprite.rect.X;
             y = walls[2].sprite.rect.Y - walls[0].sprite.rect.Height;
@@ -124,6 +129,7 @@ namespace _2D_Monogame_Individual_Project
                     scale = 1.0f,
                 };
             walls[3].sides = new EWallSide[] { TOP };
+            walls[3].id = wallNum++;
 
             x = walls[1].sprite.rect.X;
             y = walls[0].sprite.rect.Y;
@@ -139,6 +145,7 @@ namespace _2D_Monogame_Individual_Project
                     scale = 1.0f,
                 };
             walls[4].sides = new EWallSide[] { RIGHT };
+            walls[4].id = wallNum++;
 
             x = walls[4].sprite.rect.Left;
             y = walls[4].sprite.rect.Bottom;
@@ -154,6 +161,7 @@ namespace _2D_Monogame_Individual_Project
                 scale = 1.0f,
             };
             walls[5].sides = new EWallSide[] { TOP };
+            walls[5].id = wallNum++;
 
             x = walls[1].sprite.rect.Left;
             y = walls[1].sprite.rect.Top;
@@ -169,6 +177,7 @@ namespace _2D_Monogame_Individual_Project
                 scale = 1.0f,
             };
             walls[6].sides = new EWallSide[] { BOTTOM };
+            walls[6].id = wallNum++;
 
             x = walls[5].sprite.rect.Right - 3;
             y = walls[5].sprite.rect.Top + 2;
@@ -185,6 +194,7 @@ namespace _2D_Monogame_Individual_Project
             };
             walls[7].sides = new EWallSide[] { RIGHT, TOP };
             walls[7].rotatedY = true;
+            walls[7].id = wallNum++;
 
             x = walls[6].sprite.rect.Right - 3;
             y = walls[6].sprite.rect.Top + 2;
@@ -201,6 +211,7 @@ namespace _2D_Monogame_Individual_Project
             };
             walls[8].sides = new EWallSide[] { LEFT, TOP };
             walls[8].rotatedY = true;
+            walls[8].id = wallNum++;
 
             var ang = walls[8].sprite.rotation;
             var dist = walls[8].sprite.rect.Height;
@@ -219,6 +230,7 @@ namespace _2D_Monogame_Individual_Project
                 scale = 1.0f,
             };
             walls[9].sides = new EWallSide[] { BOTTOM };
+            walls[9].id = wallNum++;
 
             base.LoadContent();
         }
@@ -229,8 +241,6 @@ namespace _2D_Monogame_Individual_Project
                 Exit();
 
             this.BoundsCheck();
-
-            ball.sprite.loc = ball.nextPos;
 
             base.Update(gameTime);
         }
