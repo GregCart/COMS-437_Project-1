@@ -72,7 +72,7 @@ namespace Objects
                 var r2 = Enumerable.Range(fromLine.X, toLine.X).ToArray();
 
                 //if line matches horizontally
-                if (r1.Max() <= r2.Max() && r1.Min() >= r2.Min())
+                if ((r1.Max() <= r2.Max() && r1.Min() >= r2.Min()) || (r2.Max() <= r1.Max() && r2.Min() >= r1.Min()))
                 {
                     return true;
                 }
