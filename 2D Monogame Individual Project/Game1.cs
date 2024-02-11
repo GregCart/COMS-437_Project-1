@@ -150,8 +150,9 @@ namespace _2D_Monogame_Individual_Project
             walls[4].sides = new EWallSide[] { RIGHT };
             walls[4].id = wallNum++;
 
-            /*x = walls[4].sprite.rect.Left;
-            y = walls[4].sprite.rect.Bottom;
+            pt = walls[4].endPoint().ToPoint();
+            x = pt.X - wallThickness;
+            y = pt.Y;
             walls[5].sprite = new SpriteData
             {
                 rect = new Rectangle(
@@ -160,7 +161,7 @@ namespace _2D_Monogame_Individual_Project
                             10 * minLength,
                             wallThickness
                        ),
-                rotation = 0.0f,
+                rotation = MathHelper.ToRadians(0),
                 scale = 1.0f,
             };
             walls[5].sides = new EWallSide[] { TOP };
@@ -182,56 +183,58 @@ namespace _2D_Monogame_Individual_Project
             walls[6].sides = new EWallSide[] { BOTTOM };
             walls[6].id = wallNum++;
 
-            x = walls[5].sprite.rect.Right - 3;
-            y = walls[5].sprite.rect.Top + 2;
+            pt = walls[5].endPoint().ToPoint();
+            x = pt.X;
+            y = pt.Y;
             walls[7].sprite = new SpriteData
             {
                 rect = new Rectangle(
                             x,
                             y,
-                            wallThickness,
-                            walls[0].sprite.rect.Height
+                            (int)(walls[2].endPoint().Y - walls[3].endPoint().Y),
+                            wallThickness
                        ),
-                rotation = MathHelper.ToRadians(-30),
+                rotation = MathHelper.ToRadians(60),
                 scale = 1.0f,
             };
             walls[7].sides = new EWallSide[] { RIGHT, TOP };
             walls[7].rotatedY = true;
             walls[7].id = wallNum++;
 
-            x = walls[6].sprite.rect.Right - 3;
-            y = walls[6].sprite.rect.Top + 2;
+            pt = walls[6].endPoint().ToPoint();
+            x = pt.X;
+            y = pt.Y;
             walls[8].sprite = new SpriteData
             {
                 rect = new Rectangle(
                             x,
                             y,
-                            wallThickness,
-                            walls[1].sprite.rect.Height + (int)(walls[4].sprite.rect.Height - .2 * minLength)
+                            (int)(walls[7].endPoint().Y - walls[5].endPoint().Y),
+                            wallThickness
                        ),
-                rotation = MathHelper.ToRadians(30),
+                rotation = MathHelper.ToRadians(120),
                 scale = 1.0f,
             };
-            walls[8].sides = new EWallSide[] { LEFT, TOP };
+            walls[8].sides = new EWallSide[] { RIGHT, TOP };
             walls[8].rotatedY = true;
             walls[8].id = wallNum++;
 
             pt = walls[8].endPoint().ToPoint();
             x = pt.X;
-            y = pt.Y;
+            y = pt.Y - wallThickness;
             walls[9].sprite = new SpriteData
             {
                 rect = new Rectangle(
                             x,
                             y,
-                            wallThickness,
-                            50
+                            (int)(walls[7].endPoint().X - x),
+                            wallThickness
                        ),
-                rotation = MathHelper.ToRadians(90),
+                rotation = MathHelper.ToRadians(0),
                 scale = 1.0f,
             };
             walls[9].sides = new EWallSide[] { BOTTOM };
-            walls[9].id = wallNum++; */
+            walls[9].id = wallNum++;
 
             base.LoadContent();
         }
