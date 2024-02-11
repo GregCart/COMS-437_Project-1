@@ -42,10 +42,11 @@ namespace Objects
 
         public Vector2 endPoint()
         {
-            var ang = this.sprite.rotation;
+            var ang = this.sprite.rotation - (MathF.PI / 2);
             var dist = this.sprite.rect.Height;
-            var x = (int)(Math.Sin(ang) * dist) + this.sprite.rect.X;
-            var y = (int)(Math.Cos(ang) * dist) + this.sprite.rect.Y;
+
+            var x = (int)(Math.Cos(ang) * dist) + this.sprite.rect.X;
+            var y = (int)(-(Math.Sin(ang) * dist)) + this.sprite.rect.Y;
 
             return new Vector2(x, y);
         }
@@ -82,6 +83,13 @@ namespace Objects
             var x = (int)(Math.Cos(ang) * dist) + this.sprite.rect.X;
             var y = (int)(Math.Sin(ang) * dist) + this.sprite.rect.Y;
             Vector2 end = new Vector2(x, y);
+
+            if (this.sides == null)
+            {
+                base.Update(gameTime);
+
+                return;
+            }
 
             foreach (EWallSide w in this.sides)
             {

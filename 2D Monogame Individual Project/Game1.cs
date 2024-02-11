@@ -115,9 +115,8 @@ namespace _2D_Monogame_Individual_Project
             walls[2].sides = new EWallSide[] { BOTTOM };
             walls[2].id = wallNum++;
 
-            pt = walls[2].endPoint().ToPoint();
-            x = pt.X;
-            y = pt.Y - walls[0].sprite.rect.Height;
+            x = walls[0].sprite.rect.X;
+            y = walls[0].sprite.rect.Y;
             walls[3].sprite = new SpriteData
                 {
                     rect = new Rectangle(
@@ -126,14 +125,15 @@ namespace _2D_Monogame_Individual_Project
                             wallThickness,
                             walls[2].sprite.rect.Height
                        ),
-                    rotation = MathHelper.ToRadians(0),
+                    rotation = MathHelper.ToRadians(-90),
                     scale = 1.0f,
                 };
             walls[3].sides = new EWallSide[] { TOP };
             walls[3].id = wallNum++;
 
-            x = walls[1].sprite.rect.X;
-            y = walls[0].sprite.rect.Y;
+            pt = walls[3].endPoint().ToPoint();
+            x = pt.X;
+            y = pt.Y;
             walls[4].sprite = new SpriteData
                 {
                     rect = new Rectangle(
@@ -148,7 +148,7 @@ namespace _2D_Monogame_Individual_Project
             walls[4].sides = new EWallSide[] { RIGHT };
             walls[4].id = wallNum++;
 
-            x = walls[4].sprite.rect.Left;
+            /*x = walls[4].sprite.rect.Left;
             y = walls[4].sprite.rect.Bottom;
             walls[5].sprite = new SpriteData
             {
@@ -223,13 +223,13 @@ namespace _2D_Monogame_Individual_Project
                             x,
                             y,
                             wallThickness,
-                            (int)(Math.Cos(ang) * dist + walls[7].sprite.rect.X)
+                            50
                        ),
                 rotation = MathHelper.ToRadians(90),
                 scale = 1.0f,
             };
             walls[9].sides = new EWallSide[] { BOTTOM };
-            walls[9].id = wallNum++;
+            walls[9].id = wallNum++; */
 
             base.LoadContent();
         }
