@@ -42,11 +42,11 @@ namespace Objects
 
         public Vector2 endPoint()
         {
-            var ang = this.sprite.rotation - (MathF.PI / 2);
-            var dist = this.sprite.rect.Height;
+            var ang = this.sprite.rotation;
+            var dist = this.sprite.rect.Width;
 
             var x = (int)(Math.Cos(ang) * dist) + this.sprite.rect.X;
-            var y = (int)(-(Math.Sin(ang) * dist)) + this.sprite.rect.Y;
+            var y = (int)(Math.Sin(ang) * dist) + this.sprite.rect.Y;
 
             return new Vector2(x, y);
         }
