@@ -131,6 +131,7 @@ namespace _2D_Monogame_Individual_Project
             walls[3].sides = new EWallSide[] { TOP };
             walls[3].id = wallNum++;
 
+            //This is where it returns a negative x
             pt = walls[3].endPoint().ToPoint();
             x = pt.X;
             y = pt.Y;
@@ -142,7 +143,7 @@ namespace _2D_Monogame_Individual_Project
                             wallThickness,
                             walls[0].sprite.rect.Height - walls[1].sprite.rect.Height - 2 * minLength
                        ),
-                    rotation = 0.0f,
+                    rotation = MathHelper.ToRadians(0),
                     scale = 1.0f,
                 };
             walls[4].sides = new EWallSide[] { RIGHT };
