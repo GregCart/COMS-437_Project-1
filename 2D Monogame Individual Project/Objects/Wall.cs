@@ -85,12 +85,10 @@ namespace Objects
                 return;
             }
 
-            foreach (EWallSide w in this.sides)
+            if (doIntersect(ball.sprite.loc + ballRad, ballDirPt, pos, end))
             {
-                if (!doIntersect(ball.sprite.loc + ballRad, ballDirPt, pos, end))
+                foreach (EWallSide w in this.sides)
                 {
-                    continue;
-                } else {
                     switch (w)
                     {
                         case EWallSide.LEFT:
