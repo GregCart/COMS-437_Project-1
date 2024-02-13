@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using Objects;
+using _2D_Monogame_Individual_Project.Objects;
 
 namespace _2D_Monogame_Individual_Project
 {
@@ -236,11 +237,18 @@ namespace _2D_Monogame_Individual_Project
             walls[9].sides = new EWallSide[] { BOTTOM };
             walls[9].id = wallNum++;
 
+            foreach (var wall in walls)
+            {
+                wall.UpdateContent();
+            }
+
             base.LoadContent();
         }
 
         protected override void Update(GameTime gameTime)
         {
+            InputManager.Update();
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 Exit();
 

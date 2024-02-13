@@ -8,8 +8,9 @@ namespace Objects
     {
         public static Texture2D tex;
         public SpriteData sprite;
-        public Vector2 vel;
+        public Vector2 acceleration;
         public Vector2 nextPos;
+        public Vector2 vel;
 
 
         public Ball(Game game) : base(game) { }
@@ -40,7 +41,9 @@ namespace Objects
         {
             this.sprite.loc = this.nextPos;
 
-            this.nextPos = this.sprite.loc + vel;
+            this.nextPos = this.sprite.loc + this.vel;
+
+            this.vel += acceleration;
 
             base.Update(gameTime);
         }

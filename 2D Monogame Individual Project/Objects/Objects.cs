@@ -31,7 +31,12 @@ namespace Objects
         /// <returns>tex Height and Width scaled by scale</returns>
         public Vector2 size()
         {
-            return new Vector2(tex.Height, tex.Width) * scale;
+            return new Vector2(this.tex.Height, this.tex.Width) * scale;
+        }
+
+        public Vector2 center()
+        {
+            return loc + (size() / 2);
         }
     }
 }
