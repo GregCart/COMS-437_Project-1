@@ -16,6 +16,7 @@ namespace _2D_Monogame_Individual_Project
         private Texture2D _wallTexture;
         private Random rnd;
 
+        private InputManager inputManager;
         private Frame2D _frame;
         private Wall[] walls;
         private Ball ball;
@@ -46,6 +47,9 @@ namespace _2D_Monogame_Individual_Project
                 walls[i] = new Wall(this);
                 Components.Add(walls[i]);
             }
+
+            inputManager = new InputManager(this);
+            Components.Add(inputManager);
 
             base.Initialize();
         }

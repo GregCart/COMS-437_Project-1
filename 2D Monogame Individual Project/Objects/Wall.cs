@@ -79,15 +79,6 @@ namespace Objects
             Vector2 ballRad = ball.sprite.size() / 2;
             Vector2 center = ball.sprite.center();
             ballDir.Normalize();
-            ballDir = (ballDir * 2) - new Vector2(1);
-            if (ballDir > 0)
-            {
-                ballDir.Ceiling();
-            }
-            else if (ballDir < 0)
-            {
-                ballDir.Floor();
-            }
             Vector2 ballDirPt = center + (ballRad * ballDir);
             //switch to using clamp for detection
             Vector2 pos = new Vector2(this.sprite.rect.X, this.sprite.rect.Y);
