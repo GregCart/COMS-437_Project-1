@@ -72,6 +72,8 @@ namespace Objects
             this.LoadContent();
         }
 
+        
+
         public override void Update(GameTime gameTime)
         {
             Ball ball = ((Ball)Game.Components.First());
@@ -95,9 +97,9 @@ namespace Objects
             {
                 //Vector2 normal = Vector2.Transform(Vector2.UnitX, Matrix.CreateRotationX(this.sprite.rotation));
 
-                //ball.vel = Vector2.Reflect(ball.vel, Vector2.UnitX * MathF.Sin(this.sprite.rotation));
+                ball.vel = Vector2.Reflect(ball.vel, Vector2.UnitX.Rotate(this.sprite.rotation));
 
-                foreach (EWallSide w in this.sides)
+                /*foreach (EWallSide w in this.sides)
                 {
                     switch (w)
                     {
@@ -116,7 +118,7 @@ namespace Objects
                         default:
                             break;
                     }
-                }
+                }*/
             }
 
             base.Update(gameTime);

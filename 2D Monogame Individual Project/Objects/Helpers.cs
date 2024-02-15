@@ -10,7 +10,7 @@ namespace Objects
 {
     public static class Helpers
     {
-        public static Vector2 Manhattan(Vector2 from, Vector2 to)
+        public static Vector2 Manhattan(this Vector2 from, Vector2 to)
         {
             return new Vector2(to.X - from.X, to.Y - from.Y);
         }
@@ -180,5 +180,16 @@ namespace Objects
             return false; // Doesn't fall in any of the above cases 
         }
         #endregion
+
+        //from Addison
+        public static Vector2 Rotate(this Vector2 point, float angle)
+        {
+            float x = point.X * (float)Math.Cos(angle) - point.Y * (float)Math.Sin(angle);
+            float y = point.X * (float)Math.Sin(angle) + point.Y * (float)Math.Cos(angle);
+
+            return new Vector2(x, y);
+        }
+
+
     }
 }
