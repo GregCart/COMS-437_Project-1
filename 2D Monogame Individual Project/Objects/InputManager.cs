@@ -25,6 +25,16 @@ namespace _2D_Monogame_Individual_Project.Objects
         {
         }
 
+        public static void Reset()
+        {
+            MDPos = Vector2.Zero;
+            Time = 0.0f;
+            DownTime = 0.0f;
+            LeftClicked = false;
+            LeftWasClicked = false;
+            count = true;
+        }
+
         public static void Update(GameTime gameTime)
         {
             oms = ms;

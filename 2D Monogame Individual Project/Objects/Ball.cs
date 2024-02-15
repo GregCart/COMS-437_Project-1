@@ -12,6 +12,7 @@ namespace Objects
         public Vector2 acceleration;
         public Vector2 nextPos;
         public Vector2 vel;
+        public bool inMotion { get; private set; }
 
 
         public Ball(Game game) : base(game) { }
@@ -19,7 +20,7 @@ namespace Objects
         public Ball Setup(Frame2D frame, Random rnd)
         {
             sprite.loc = new Vector2(frame.center.X - 200, frame.center.Y + 100);
-            vel = new Vector2(1, -1);
+            vel = new Vector2(0, 0);
             sprite.scale = .1f;
             this.nextPos = this.sprite.loc + vel;
 
@@ -40,11 +41,23 @@ namespace Objects
 
         public override void Update(GameTime gameTime)
         {
-            this.sprite.loc = this.nextPos;
+            if (this.vel.Length() > 1e-6f)
+            {
+                this.sprite.loc = this.nextPos;
 
-            this.nextPos = this.sprite.loc + this.vel;
+                this.nextPos = this.sprite.loc + this.vel;
 
-            this.vel += acceleration;
+                Vector2 accel = this.vel;
+
+                accel.Normalize();
+
+                this.vel -= accel * MathHelper.Min(this.vel.Length(), (float)(.5 * gameTime.ElapsedGameTime.TotalSeconds));
+            } else if (!InputManager.LeftClicked && InputManager.LeftWasClicked)
+            {
+                Vector2 dir = (InputManager.MDPos - this.sprite.center());
+                dir.Normalize();
+                this.vel = dir * MathHelper.Max(1, (InputManager.DownTime * 25) % 75);
+            }
 
             base.Update(gameTime);
         }
@@ -114,8 +127,7 @@ namespace Objects
 
             } else if (InputManager.LeftWasClicked)
             {
-                InputManager.MDPos = Vector2.Zero;
-                InputManager.count = true;
+                InputManager.Reset();
             }
 
             base.Draw(gameTime);
