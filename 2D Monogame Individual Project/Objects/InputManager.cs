@@ -38,14 +38,14 @@ namespace _2D_Monogame_Individual_Project.Objects
                 LeftWasClicked = true;
                 if (count)
                 {
-                    Time = (float)gameTime.TotalGameTime.TotalMilliseconds;
+                    Time = (float)gameTime.TotalGameTime.TotalSeconds;
                     count = false;
                 }
-                DownTime = (float)(gameTime.TotalGameTime.TotalMilliseconds - Time);
+                DownTime = (float)(gameTime.TotalGameTime.TotalSeconds - Time);
                 Console.WriteLine(MDPos.ToString());
             } else if (LeftWasClicked)
             {
-                Time = (float)(gameTime.TotalGameTime.TotalMilliseconds - Time);
+                Time = (float)(gameTime.TotalGameTime.TotalSeconds - Time);
                 LeftWasClicked = false;
             }
         }
