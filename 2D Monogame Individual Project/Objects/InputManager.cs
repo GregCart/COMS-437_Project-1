@@ -12,26 +12,41 @@ namespace _2D_Monogame_Individual_Project.Objects
     public class InputManager : GameComponent
     {
         public static bool LeftClicked = false;
+        public static bool LeftWasClicked = false;
+        public static bool count = true;
 
         private static MouseState ms = new MouseState(), oms;
 
-        public static Vector2 MDPos = new Vector2();
+        public static Vector2 MDPos = Vector2.Zero;
+        public static float Time = 0.0f;
+        public static float DownTime = 0.0f;
 
         public InputManager(Game game) : base(game)
         {
         }
 
-        public static void Update()
+        public static void Update(GameTime gameTime)
         {
             oms = ms;
             ms = Mouse.GetState();
-            LeftClicked = ms.LeftButton != ButtonState.Pressed && oms.LeftButton == ButtonState.Pressed;
+            LeftClicked = ms.LeftButton == ButtonState.Pressed;
             // true On left release like Windows buttons
 
             if (LeftClicked)
             {
                 MDPos = ms.Position.ToVector2();
+                LeftWasClicked = true;
+                if (count)
+                {
+                    Time = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                    count = false;
+                }
+                DownTime = (float)(gameTime.ElapsedGameTime.TotalMilliseconds - Time);
                 Console.WriteLine(MDPos.ToString());
+            } else if (LeftWasClicked)
+            {
+                Time = (float)(gameTime.ElapsedGameTime.TotalMilliseconds - Time);
+                LeftWasClicked = false;
             }
         }
 

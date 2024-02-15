@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using _2D_Monogame_Individual_Project.Objects;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
@@ -85,6 +86,37 @@ namespace Objects
                 SpriteEffects.None,
                 1.0f);
             #endregion
+
+            InputManager im = ((InputManager)Game.Services.GetService(typeof(InputManager)));
+
+            if (InputManager.MDPos != Vector2.Zero && (InputManager.LeftClicked))
+            {
+                //distance = (int)Vector2.Distance(sprite.loc + (sprite.size() / 2), InputManager.MDPos);
+                distance = (int)(MathHelper.Max(1, InputManager.DownTime % 25));
+                texture = new Texture2D(spriteBatch.GraphicsDevice, distance, thickness);
+                data = new Color[distance * thickness];
+                for (int i = 0; i < data.Length; i++)
+                {
+                    data[i] = color;
+                }
+                texture.SetData(data);
+                rotation = (float)Math.Atan2(InputManager.MDPos.Y - sprite.loc.Y, InputManager.MDPos.X - sprite.loc.X);
+                spriteBatch.Draw(
+                    texture,
+                    sprite.loc + (sprite.size() / 2),
+                    null,
+                    Color.DimGray,
+                    rotation,
+                    origin,
+                    1.0f,
+                    SpriteEffects.None,
+                    1.0f);
+
+            } else if (InputManager.LeftWasClicked)
+            {
+                InputManager.MDPos = Vector2.Zero;
+                InputManager.count = true;
+            }
 
             base.Draw(gameTime);
         }

@@ -49,7 +49,7 @@ namespace _2D_Monogame_Individual_Project
             }
 
             inputManager = new InputManager(this);
-            Components.Add(inputManager);
+            Services.AddService(typeof(InputManager), inputManager);
 
             base.Initialize();
         }
@@ -251,7 +251,7 @@ namespace _2D_Monogame_Individual_Project
 
         protected override void Update(GameTime gameTime)
         {
-            InputManager.Update();
+            InputManager.Update(gameTime);
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 Exit();
