@@ -72,7 +72,29 @@ namespace Objects
             this.LoadContent();
         }
 
-        
+        /*public bool OutOfBounds()
+        {
+            foreach (EWallSide w in this.sides)
+            {
+                switch (w)
+                {
+                    case EWallSide.LEFT:
+                        ball.vel = Vector2.Reflect(ball.vel, Vector2.UnitX);
+                        break;
+                    case EWallSide.RIGHT:
+                        ball.vel = Vector2.Reflect(ball.vel, Vector2.UnitX);
+                        break;
+                    case EWallSide.TOP:
+                        ball.vel = Vector2.Reflect(ball.vel, -Vector2.UnitY);
+                        break;
+                    case EWallSide.BOTTOM:
+                        ball.vel = Vector2.Reflect(ball.vel, Vector2.UnitY);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }*/
 
         public override void Update(GameTime gameTime)
         {
@@ -95,30 +117,7 @@ namespace Objects
 
             if (doIntersect(center, ballDirPt, pos, end))
             {
-                //Vector2 normal = Vector2.Transform(Vector2.UnitX, Matrix.CreateRotationX(this.sprite.rotation));
-
-                ball.vel = Vector2.Reflect(ball.vel, Vector2.UnitX.Rotate(this.sprite.rotation));
-
-                /*foreach (EWallSide w in this.sides)
-                {
-                    switch (w)
-                    {
-                        case EWallSide.LEFT:
-                                ball.vel = Vector2.Reflect(ball.vel, Vector2.UnitX);
-                            break;
-                        case EWallSide.RIGHT:
-                                ball.vel = Vector2.Reflect(ball.vel, Vector2.UnitX);
-                            break;
-                        case EWallSide.TOP:
-                                ball.vel = Vector2.Reflect(ball.vel, -Vector2.UnitY);
-                            break;
-                        case EWallSide.BOTTOM:
-                                ball.vel = Vector2.Reflect(ball.vel, Vector2.UnitY);
-                            break;
-                        default:
-                            break;
-                    }
-                }*/
+                ball.vel = Vector2.Reflect(ball.vel, -Vector2.UnitX.Rotate(this.sprite.rotation - (MathF.PI / 2)));
             }
 
             base.Update(gameTime);
