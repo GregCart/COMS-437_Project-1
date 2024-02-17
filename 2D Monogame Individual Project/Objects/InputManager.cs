@@ -1,10 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Objects;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 // from https://stackoverflow.com/questions/75449753/c-sharp-monogame-handling-mouse
 namespace _2D_Monogame_Individual_Project.Objects
@@ -21,8 +19,11 @@ namespace _2D_Monogame_Individual_Project.Objects
         public static float Time = 0.0f;
         public static float DownTime = 0.0f;
 
+        private static Game game;
+
         public InputManager(Game game) : base(game)
         {
+            InputManager.game = game;
         }
 
         public static void Reset()
@@ -53,10 +54,17 @@ namespace _2D_Monogame_Individual_Project.Objects
                 }
                 DownTime = (float)(gameTime.TotalGameTime.TotalSeconds - Time);
                 Console.WriteLine(MDPos.ToString());
-            } else if (LeftWasClicked)
+            }
+            else if (LeftWasClicked)
             {
                 Time = (float)(gameTime.TotalGameTime.TotalSeconds - Time);
                 LeftWasClicked = false;
+                Ball ball = (Ball)game.Components.First();
+                ball.Kick();
+            }
+            else
+            {
+                Reset();
             }
         }
 

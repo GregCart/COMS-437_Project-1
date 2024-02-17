@@ -20,6 +20,8 @@ namespace Objects
         public EWallSide[] sides;
         public float angle;
 
+        private int cooldown = 0;
+
         public Wall(Game game) : base(game)
         {
 
@@ -115,10 +117,15 @@ namespace Objects
                 return;
             }
 
-            if (doIntersect(center, ballDirPt, pos, end))
+            if (doIntersect(center, ball.nextPos, pos, end))
             {
-                ball.vel = Vector2.Reflect(ball.vel, -Vector2.UnitX.Rotate(this.sprite.rotation - (MathF.PI / 2)));
+                if (this.cooldown <= 0)
+                {
+                    ball.vel = Vector2.Reflect(ball.vel, -Vector2.UnitX.Rotate(this.sprite.rotation - (MathF.PI / 2)));
+                    this.cooldown = 120;
+                }
             }
+            this.cooldown--;
 
             base.Update(gameTime);
         }

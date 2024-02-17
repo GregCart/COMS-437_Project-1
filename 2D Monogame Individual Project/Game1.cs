@@ -34,7 +34,7 @@ namespace _2D_Monogame_Individual_Project
         protected override void Initialize()
         {
             _frame = new Frame2D();
-            walls = new Wall[10];
+            walls = new Wall[11];
             wallThickness = 4;
 
             ball = new Ball(this);
@@ -42,7 +42,7 @@ namespace _2D_Monogame_Individual_Project
             rnd = new Random();
 
             Components.Add(ball);
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 11; i++)
             {
                 walls[i] = new Wall(this);
                 Components.Add(walls[i]);
@@ -82,7 +82,7 @@ namespace _2D_Monogame_Individual_Project
                             wallThickness
                        ),
                     rotation = MathHelper.ToRadians(90),
-                    scale = 1.0f,
+                    scale = 1.0f, loc = new Vector2(x, y)
                 };
             walls[0].sides = new EWallSide[] { LEFT };
             walls[0].id = wallNum++;
@@ -99,7 +99,7 @@ namespace _2D_Monogame_Individual_Project
                             wallThickness
                        ),
                     rotation = MathHelper.ToRadians(90),
-                    scale = 1.0f,
+                    scale = 1.0f, loc = new Vector2(x, y)
                 };
             walls[1].sides = new EWallSide[] { RIGHT };
             walls[1].id = wallNum++;
@@ -116,7 +116,7 @@ namespace _2D_Monogame_Individual_Project
 
                        ),
                     rotation = MathHelper.ToRadians(0),
-                    scale = 1.0f,
+                    scale = 1.0f, loc = new Vector2(x, y)
             };
             walls[2].sides = new EWallSide[] { BOTTOM };
             walls[2].id = wallNum++;
@@ -132,7 +132,7 @@ namespace _2D_Monogame_Individual_Project
                             wallThickness
                        ),
                     rotation = MathHelper.ToRadians(0),
-                    scale = 1.0f,
+                    scale = 1.0f, loc = new Vector2(x, y)
                 };
             walls[3].sides = new EWallSide[] { TOP };
             walls[3].id = wallNum++;
@@ -150,7 +150,7 @@ namespace _2D_Monogame_Individual_Project
                             wallThickness
                        ),
                     rotation = MathHelper.ToRadians(90),
-                    scale = 1.0f,
+                    scale = 1.0f, loc = new Vector2(x, y)
                 };
             walls[4].sides = new EWallSide[] { RIGHT };
             walls[4].id = wallNum++;
@@ -167,7 +167,7 @@ namespace _2D_Monogame_Individual_Project
                             wallThickness
                        ),
                 rotation = MathHelper.ToRadians(0),
-                scale = 1.0f,
+                scale = 1.0f, loc = new Vector2(x, y)
             };
             walls[5].sides = new EWallSide[] { TOP };
             walls[5].id = wallNum++;
@@ -183,7 +183,7 @@ namespace _2D_Monogame_Individual_Project
                             wallThickness
                        ),
                 rotation = 0.0f,
-                scale = 1.0f,
+                scale = 1.0f, loc = new Vector2(x, y)
             };
             walls[6].sides = new EWallSide[] { BOTTOM };
             walls[6].id = wallNum++;
@@ -199,8 +199,8 @@ namespace _2D_Monogame_Individual_Project
                             (int)(walls[2].endPoint().Y - walls[3].endPoint().Y),
                             wallThickness
                        ),
-                rotation = MathHelper.ToRadians(60),
-                scale = 1.0f,
+                rotation = MathHelper.ToRadians(90),
+                scale = 1.0f, loc = new Vector2(x, y)
             };
             walls[7].sides = new EWallSide[] { RIGHT, TOP };
             walls[7].rotatedY = true;
@@ -218,7 +218,7 @@ namespace _2D_Monogame_Individual_Project
                             wallThickness
                        ),
                 rotation = MathHelper.ToRadians(120),
-                scale = 1.0f,
+                scale = 1.0f, loc = new Vector2(x, y)
             };
             walls[8].sides = new EWallSide[] { RIGHT, TOP };
             walls[8].rotatedY = true;
@@ -236,10 +236,27 @@ namespace _2D_Monogame_Individual_Project
                             wallThickness
                        ),
                 rotation = MathHelper.ToRadians(0),
-                scale = 1.0f,
+                scale = 1.0f, loc = new Vector2(x, y)
             };
             walls[9].sides = new EWallSide[] { BOTTOM };
             walls[9].id = wallNum++;
+
+            pt = walls[3].endPoint().ToPoint();
+            x = (int)(walls[3].sprite.loc.X + ((pt.X - walls[3].sprite.loc.X) / 4));
+            y = pt.Y + wallThickness;
+            walls[10].sprite = new SpriteData
+            {
+                rect = new Rectangle(
+                            x,
+                            y,
+                            (int)(minLength * 3.6),
+                            wallThickness
+                       ),
+                rotation = MathHelper.ToRadians(130),
+                scale = 1.0f, loc = new Vector2(x, y)
+            };
+            walls[10].sides = new EWallSide[] { BOTTOM };
+            walls[10].id = wallNum++;
 
             foreach (var wall in walls)
             {
