@@ -39,6 +39,11 @@ namespace Objects
             base.LoadContent();
         }
 
+        public void UpdateContent()
+        {
+            this.LoadContent();
+        }
+
         public override void Update(GameTime gameTime)
         {
             if (this.vel.Length() > 1e-6f)
@@ -71,7 +76,7 @@ namespace Objects
         {
             SpriteBatch spriteBatch = ((SpriteBatch)Game.Services.GetService(typeof(SpriteBatch)));
 
-            spriteBatch.Draw(sprite.tex, sprite.loc, null, Color.White, sprite.rotation, Vector2.Zero, sprite.scale, SpriteEffects.None, 0.0f);
+            spriteBatch.Draw(sprite.tex, sprite.loc, null, Color.White, sprite.rotation, sprite.center(), sprite.scale, SpriteEffects.None, 0.0f);
 
             var thickness = 2;
             Color color = Color.Red;
@@ -93,7 +98,7 @@ namespace Objects
             var rotation = (float)Math.Atan2(nextPos.Y - sprite.loc.Y, nextPos.X - sprite.loc.X);
             var origin = new Vector2(0, thickness / 2);
 
-            spriteBatch.Draw(
+            /*spriteBatch.Draw(
                 texture,
                 sprite.loc + (sprite.size() / 2),
                 null,
@@ -102,7 +107,7 @@ namespace Objects
                 origin,
                 1.0f,
                 SpriteEffects.None,
-                1.0f);
+                1.0f);*/
             #endregion
 
             if (this.vel.Length() <= 1e-3f)

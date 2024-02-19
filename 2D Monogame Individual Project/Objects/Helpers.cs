@@ -1,10 +1,8 @@
 ﻿using static System.MathF;
 using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Objects
 {
@@ -110,6 +108,7 @@ namespace Objects
                 return false;
             }
         }
+
         #endregion
 
         #region from geeksforgeeks
@@ -181,7 +180,7 @@ namespace Objects
         }
         #endregion
 
-        //from Addison
+        # region from Addison
         public static Vector2 Rotate(this Vector2 point, float angle)
         {
             float x = point.X * (float)Math.Cos(angle) - point.Y * (float)Math.Sin(angle);
@@ -190,6 +189,6 @@ namespace Objects
             return new Vector2(x, y);
         }
 
-
+        #endregion
     }
 }

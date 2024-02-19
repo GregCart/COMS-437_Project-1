@@ -20,6 +20,7 @@ namespace _2D_Monogame_Individual_Project
         private Frame2D _frame;
         private Wall[] walls;
         private Ball ball;
+        private Hole hole;
 
         private int wallThickness;
         private int minLength;
@@ -47,6 +48,9 @@ namespace _2D_Monogame_Individual_Project
                 walls[i] = new Wall(this);
                 Components.Add(walls[i]);
             }
+
+            hole = new Hole(this);
+            Components.Add(hole);
 
             inputManager = new InputManager(this);
             Services.AddService(typeof(InputManager), inputManager);
@@ -262,6 +266,17 @@ namespace _2D_Monogame_Individual_Project
             {
                 wall.UpdateContent();
             }
+
+            pt = walls[9].sprite.loc.ToPoint();
+            x = pt.X + walls[9].sprite.rect.Width / 2;
+            y = pt.Y - wallThickness - 20;
+            hole.sprite = new SpriteData
+            {
+                rotation = MathHelper.ToRadians(0),
+                scale = .08f,
+                loc = new Vector2(x, y)
+            };
+            hole.UpdateContent();
 
             base.LoadContent();
         }
