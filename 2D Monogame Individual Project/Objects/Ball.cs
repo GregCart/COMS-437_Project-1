@@ -76,7 +76,7 @@ namespace Objects
         {
             SpriteBatch spriteBatch = ((SpriteBatch)Game.Services.GetService(typeof(SpriteBatch)));
 
-            spriteBatch.Draw(sprite.tex, sprite.loc, null, Color.White, sprite.rotation, sprite.center(), sprite.scale, SpriteEffects.None, 0.0f);
+            spriteBatch.Draw(sprite.tex, sprite.loc, null, Color.White, sprite.rotation, Vector2.Zero, sprite.scale, SpriteEffects.None, 0.0f);
 
             var thickness = 2;
             Color color = Color.Red;
