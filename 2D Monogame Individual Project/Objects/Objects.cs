@@ -29,7 +29,7 @@ namespace Objects
             get
             {
                 Vector2 s = size();
-                Vector2 c = center();
+                Vector2 c = center() - loc;
 
                 List<Vector2> corners = new()
                 {
@@ -40,9 +40,9 @@ namespace Objects
                 };
 
                 List<Vector2> rotatedCorners = new(corners.Count);
-                foreach(Vector2 v in corners) 
+                foreach(Vector2 corner in corners) 
                 {
-                    Vector2 rotatedCorner = (c - loc).Rotate(rotation) + loc;
+                    Vector2 rotatedCorner = (corner - loc).Rotate(rotation) + loc;
                     rotatedCorners.Add(rotatedCorner);
                 }
 
@@ -61,7 +61,7 @@ namespace Objects
                 
         }
 
-        public SpriteData ()
+        public SpriteData()
         {
             loc = new Vector2();
             rect = new Rectangle();
@@ -87,7 +87,7 @@ namespace Objects
         public Color PixelByWorldCoord(Vector2 worldCoord)
         {
             Vector2 relativeToCenter = worldCoord - loc;
-            Vector2 texCoord = (relativeToCenter.Rotate(-rotation) / scale) + center();
+            Vector2 texCoord = (relativeToCenter.Rotate(-rotation) / scale) + center() - loc;
 
             return PixelByTexCoord(texCoord.ToPoint());
         }

@@ -68,7 +68,7 @@ namespace Objects
             {
                 Vector2 dir = (InputManager.MDPos - this.sprite.center());
                 dir.Normalize();
-                this.vel = (dir * MathHelper.Max(1, (InputManager.DownTime * 25) % 75)) / 50;
+                this.vel = (dir * MathHelper.Max(1, (InputManager.DownTime * 25) % 100)) / 50;
             }
         }
 
@@ -117,7 +117,7 @@ namespace Objects
                 if (InputManager.MDPos != Vector2.Zero && (InputManager.LeftClicked))
                 {
                     //distance = (int)Vector2.Distance(sprite.loc + (sprite.size() / 2), InputManager.MDPos);
-                    distance = (int)(MathHelper.Max(1, (InputManager.DownTime * 25) % 75));
+                    distance = (int)(MathHelper.Max(1, (InputManager.DownTime * 25) % 100));
                     texture = new Texture2D(spriteBatch.GraphicsDevice, distance, thickness);
                     data = new Color[distance * thickness];
                     for (int i = 0; i < data.Length; i++)

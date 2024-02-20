@@ -27,6 +27,7 @@ namespace Objects
             if (ball.sprite.Intersects(this.sprite))
             {
                 this.isEntered = true;
+                ball.vel += this.speedDir * speedMod;
             }
 
             base.Update(gameTime);
@@ -61,7 +62,7 @@ namespace Objects
         {
             SpriteBatch spriteBatch = ((SpriteBatch)Game.Services.GetService(typeof(SpriteBatch)));
 
-            if (isEntered)
+            if (this.isEntered)
             {
                 Ball ball = ((Ball)Game.Components.First());
                 ball.vel += speedMod * speedDir;
