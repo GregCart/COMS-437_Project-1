@@ -19,6 +19,7 @@ namespace _2D_Monogame_Individual_Project
         private InputManager inputManager;
         private Frame2D _frame;
         private Wall[] walls;
+        private SpeedZone[] speedZones;
         private Ball ball;
         private Hole hole;
 
@@ -36,21 +37,30 @@ namespace _2D_Monogame_Individual_Project
         {
             _frame = new Frame2D();
             walls = new Wall[11];
+            speedZones = new SpeedZone[3];
+
             wallThickness = 4;
 
             ball = new Ball(this);
-
             rnd = new Random();
+            hole = new Hole(this);
+
+            for(int i = 0; i < 3; i++)
+            {
+                speedZones[i] = new SpeedZone(this);
+                Components.Add(speedZones[i]);
+            }
+
+            Components.Add(hole);
 
             Components.Add(ball);
+
             for (int i = 0; i < 11; i++)
             {
                 walls[i] = new Wall(this);
                 Components.Add(walls[i]);
             }
 
-            hole = new Hole(this);
-            Components.Add(hole);
 
             inputManager = new InputManager(this);
             Services.AddService(typeof(InputManager), inputManager);
@@ -277,6 +287,24 @@ namespace _2D_Monogame_Individual_Project
                 loc = new Vector2(x, y)
             };
             hole.UpdateContent();
+
+            speedZones[0].sprite = new SpriteData
+            {
+                rotation = MathHelper.ToRadians(0),
+                scale = 10f,
+                loc = walls[0].sprite.loc,
+                rect = new Rectangle(
+                    walls[0].sprite.loc.ToPoint(),
+                    new Point((int)(walls[1].sprite.loc.X - walls[0].sprite.loc.X), walls[0].sprite.rect.Width)
+                    )
+            };
+            speedZones[0].speedDir = new Vector2(1, 1);
+            speedZones[0].speedMod = 1;
+
+            foreach (var zone in speedZones)
+            {
+                zone.UpdateContent();
+            }
 
             base.LoadContent();
         }

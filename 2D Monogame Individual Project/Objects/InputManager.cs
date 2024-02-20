@@ -59,7 +59,7 @@ namespace _2D_Monogame_Individual_Project.Objects
             {
                 Time = (float)(gameTime.TotalGameTime.TotalSeconds - Time);
                 LeftWasClicked = false;
-                Ball ball = (Ball)game.Components.First();
+                Ball ball = (Ball)game.Components.ElementAt(4);
                 ball.Kick();
             }
             else

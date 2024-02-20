@@ -52,7 +52,7 @@ namespace Objects
 
         public override void Update(GameTime gameTime)
         {
-            Ball ball = ((Ball)Game.Components.First());
+            Ball ball = ((Ball)Game.Components.ElementAt(4));
             if(ball.sprite.Intersects(this.sprite))
             {
                 this.isEntered = true;

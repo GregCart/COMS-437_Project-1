@@ -100,7 +100,7 @@ namespace Objects
 
         public override void Update(GameTime gameTime)
         {
-            Ball ball = ((Ball)Game.Components.First());
+            Ball ball = ((Ball)Game.Components.ElementAt(4));
             Vector2 ballDir = ball.vel;
             Vector2 ballRad = ball.sprite.size() / 2;
             Vector2 center = ball.sprite.center();

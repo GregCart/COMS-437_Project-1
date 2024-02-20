@@ -9,12 +9,11 @@ namespace Objects
     internal class SpeedZone : DrawableGameComponent
     {
         public static Texture2D tex;
+        public static Rectangle zoneColor;
 
         public float speedMod;
         public Vector2 speedDir;
         public SpriteData sprite;
-
-        private bool isEntered;
 
 
         public SpeedZone(Game game) : base(game)
@@ -23,11 +22,13 @@ namespace Objects
 
         public override void Update(GameTime gameTime)
         {
-            Ball ball = ((Ball)Game.Components.First());
+            Ball ball = ((Ball)Game.Components.ElementAt(4));
             if (ball.sprite.Intersects(this.sprite))
             {
-                this.isEntered = true;
-                ball.vel += this.speedDir * speedMod;
+                if (ball.vel.Length() > 1e-3f)
+                {
+                    ball.vel += this.speedDir * speedMod;
+                }
             }
 
             base.Update(gameTime);
@@ -42,7 +43,11 @@ namespace Objects
         {
             if (tex == null)
             {
-                tex = Game.Content.Load<Texture2D>("Textures/hole");
+                tex = Game.Content.Load<Texture2D>("Textures/COMS_437-Project_1-ColorStrip");
+            }
+            if (zoneColor == null)
+            {
+                zoneColor = new Rectangle(3, 0, 1, 1);
             }
 
             sprite.tex = tex;
@@ -62,16 +67,10 @@ namespace Objects
         {
             SpriteBatch spriteBatch = ((SpriteBatch)Game.Services.GetService(typeof(SpriteBatch)));
 
-            if (this.isEntered)
-            {
-                Ball ball = ((Ball)Game.Components.First());
-                ball.vel += speedMod * speedDir;
-            }
-
             spriteBatch.Draw(
                 sprite.tex,
                 sprite.loc,
-                null,
+                zoneColor,
                 Color.White,
                 sprite.rotation,
                 new Vector2(this.sprite.size().X / 2, this.sprite.size().Y / 2),
