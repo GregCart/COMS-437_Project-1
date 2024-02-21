@@ -34,6 +34,19 @@ namespace Objects
             base.Update(gameTime);
         }
 
+        public override void Initialize()
+        {
+            this.sprite.rect = new Rectangle()
+            {
+                X = (int)this.sprite.loc.X,
+                Y = (int)this.sprite.loc.Y,
+                Width = 100,
+                Height = 100
+            };
+
+            base.Initialize();
+        }
+
         public void UpdateContent()
         {
             this.LoadContent();
@@ -45,20 +58,12 @@ namespace Objects
             {
                 tex = Game.Content.Load<Texture2D>("Textures/COMS_437-Project_1-ColorStrip");
             }
-            if (zoneColor == null)
+            if (zoneColor.IsEmpty)
             {
                 zoneColor = new Rectangle(3, 0, 1, 1);
             }
 
             sprite.tex = tex;
-
-            this.sprite.rect = new Rectangle()
-            {
-                X = (int)this.sprite.loc.X,
-                Y = (int)this.sprite.loc.Y,
-                Width = (int)this.sprite.size().X,
-                Height = (int)this.sprite.size().Y
-            };
 
             base.LoadContent();
         }
@@ -69,12 +74,11 @@ namespace Objects
 
             spriteBatch.Draw(
                 sprite.tex,
-                sprite.loc,
+                sprite.rect,
                 zoneColor,
                 Color.White,
                 sprite.rotation,
-                new Vector2(this.sprite.size().X / 2, this.sprite.size().Y / 2),
-                sprite.scale,
+                Vector2.Zero,
                 SpriteEffects.None,
                 0.0f
            );

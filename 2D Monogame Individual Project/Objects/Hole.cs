@@ -67,7 +67,9 @@ namespace Objects
 
             if (isEntered)
             {
-                spriteBatch.DrawString(font, "You Win!", new Vector2(100, 100), Color.Black);
+                spriteBatch.DrawString(font, "You Win!", new Vector2(100, 100), Color.BlanchedAlmond);
+                Ball ball = ((Ball)Game.Components.ElementAt(4));
+                ball.visible = false;
             }
 
             spriteBatch.Draw(

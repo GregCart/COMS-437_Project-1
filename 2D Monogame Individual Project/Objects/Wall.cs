@@ -59,7 +59,7 @@ namespace Objects
             {
                 tex = Game.Content.Load<Texture2D>("Textures/COMS_437-Project_1-ColorStrip");
             }
-            if (wallColor == null)
+            if (wallColor.IsEmpty)
             {
                 wallColor = new Rectangle(2, 0, 1, 1);
             }
@@ -117,7 +117,7 @@ namespace Objects
                 return;
             }
 
-            if (doIntersect(center, ball.nextPos, pos, end))
+            if (doIntersect(ballDirPt, ball.nextPos, pos, end))
             {
                 if (this.cooldown <= 0)
                 {
