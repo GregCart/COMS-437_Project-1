@@ -2,9 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Objects
 {
@@ -117,6 +114,17 @@ namespace Objects
 
             return false;
         }
+
+        public bool RectIntersects(SpriteData other)
+        {
+            Rectangle? intersection = rect.CollidesWith(other.rect);
+
+            if (!intersection.HasValue) return false;
+
+            float stepSize = Math.Min(scale, other.scale);
+
+            return false;
+        }
     }
 
     //from Addison
@@ -150,7 +158,7 @@ namespace Objects
             }
 
             Vector2 min = new(Math.Max(p00.X, p10.X), Math.Max(p00.Y, p10.Y));
-            Vector2 max = new(Math.Min(p01.X, p11.X), Math.Max(p01.Y, p11.Y));
+            Vector2 max = new(Math.Min(p01.X, p11.X), Math.Min(p01.Y, p11.Y));
 
             List<Vector2> points = new()
             {

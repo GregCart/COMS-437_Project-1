@@ -109,6 +109,24 @@ namespace Objects
             }
         }
 
+        public static Rectangle? CollidesWith(this Rectangle r1, Rectangle r2)
+        {
+            Point p00 = r1.Location;
+            Point p01 = r1.Location + new Point(r1.Width, r1.Height);
+            Point p10 = r2.Location;
+            Point p11 = r2.Location + new Point(r2.Width, r2.Height);
+
+            if (p00.X > p11.X || p00.Y > p11.Y || p10.X > p01.X || p10.Y > p01.Y)
+            {
+                return null;
+            }
+
+            Point min = new(Math.Max(p00.X, p10.X), Math.Max(p00.Y, p10.Y));
+            Point max = new(Math.Min(p01.X, p11.X), Math.Min(p01.Y, p11.Y));
+
+            return new Rectangle(min, max - min);
+        }
+
         #endregion
 
         #region from geeksforgeeks

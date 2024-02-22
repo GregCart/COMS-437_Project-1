@@ -13,6 +13,7 @@ namespace Objects
         public Vector2 nextPos;
         public Vector2 vel;
         public bool inMotion { get; private set; }
+        public bool wasInMotion { get; private set; }
         public bool visible;
 
         public Ball(Game game) : base(game) { }
@@ -36,6 +37,7 @@ namespace Objects
 
             sprite.tex = tex;
             this.visible = true;
+            this.sprite.rect = new(this.sprite.loc.ToPoint(), (this.sprite.loc + this.sprite.size()).ToPoint());
 
             base.LoadContent();
         }
@@ -47,7 +49,24 @@ namespace Objects
 
         public override void Update(GameTime gameTime)
         {
+            if (inMotion)
+            {
+                wasInMotion = true;
+            }
+            else
+            {
+                wasInMotion = false;
+            }
+
             if (this.vel.Length() > 1e-6f)
+            {
+                inMotion = true;
+            } else
+            {
+                inMotion = false;
+            }
+
+            if (this.inMotion || this.wasInMotion)
             {
                 this.sprite.loc = this.nextPos;
 
@@ -58,6 +77,7 @@ namespace Objects
                 accel.Normalize();
 
                 this.vel -= accel * MathHelper.Min(this.vel.Length(), (float)(.2 * gameTime.ElapsedGameTime.TotalSeconds));
+                this.sprite.rect = new(this.sprite.loc.ToPoint(), (this.sprite.loc + this.sprite.size()).ToPoint());
             }
 
             base.Update(gameTime);
@@ -65,11 +85,12 @@ namespace Objects
 
         public void Kick()
         {
-            if (this.vel.Length() <= 1e-3f)
+            if (!this.inMotion && !this.wasInMotion)
             {
                 Vector2 dir = (InputManager.MDPos - this.sprite.center());
                 dir.Normalize();
                 this.vel = (dir * MathHelper.Max(1, (InputManager.DownTime * 25) % 100)) / 50;
+                this.inMotion = true;
             }
         }
 
@@ -87,7 +108,7 @@ namespace Objects
                 #region from https://stackoverflow.com/questions/72913759/how-can-i-draw-lines-in-monogame
                 // Create a texture as wide as the distance between two points and as high as
                 // the desired thickness of the line.
-                var distance = (int)Vector2.Distance(sprite.loc + (sprite.size() / 2), nextPos);
+                var distance = (int)MathF.Max(Vector2.Distance(sprite.loc + (sprite.size() / 2), nextPos), 1);
                 var texture = new Texture2D(spriteBatch.GraphicsDevice, distance, thickness);
 
                 // Fill texture with given color.
@@ -114,7 +135,7 @@ namespace Objects
                     1.0f);*/
                 #endregion
 
-                if (this.vel.Length() <= 1e-3f)
+                if (!this.inMotion && !this.wasInMotion)
                 {
                     InputManager im = ((InputManager)Game.Services.GetService(typeof(InputManager)));
 

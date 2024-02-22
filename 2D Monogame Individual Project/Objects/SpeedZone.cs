@@ -12,6 +12,7 @@ namespace Objects
         public static Rectangle zoneColor;
 
         public float speedMod;
+        public int id;
         public Vector2 speedDir;
         public SpriteData sprite;
 
@@ -23,11 +24,11 @@ namespace Objects
         public override void Update(GameTime gameTime)
         {
             Ball ball = ((Ball)Game.Components.ElementAt(4));
-            if (ball.sprite.Intersects(this.sprite))
+            if (ball.sprite.rect.CollidesWith(sprite.rect).HasValue && ball.sprite.rect.CollidesWith(sprite.rect).Value.Width >= 1)
             {
-                if (ball.vel.Length() > 1e-3f)
+                if (ball.inMotion || ball.wasInMotion)
                 {
-                    ball.vel += this.speedDir * speedMod;
+                    ball.vel += this.speedDir * this.speedMod;
                 }
             }
 
@@ -40,8 +41,8 @@ namespace Objects
             {
                 X = (int)this.sprite.loc.X,
                 Y = (int)this.sprite.loc.Y,
-                Width = 100,
-                Height = 100
+                Width = 10,
+                Height = 10
             };
 
             base.Initialize();

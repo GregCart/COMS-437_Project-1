@@ -288,7 +288,8 @@ namespace _2D_Monogame_Individual_Project
             };
             hole.UpdateContent();
 
-            speedZones[0].sprite = new SpriteData
+            int speedZoneCount = 0;
+            speedZones[speedZoneCount].sprite = new SpriteData
             {
                 rotation = MathHelper.ToRadians(0),
                 scale = 10f,
@@ -298,8 +299,37 @@ namespace _2D_Monogame_Individual_Project
                     new Point((int)(walls[1].sprite.loc.X - walls[0].sprite.loc.X), walls[0].sprite.rect.Width)
                     )
             };
-            speedZones[0].speedDir = new Vector2(1, 1);
-            speedZones[0].speedMod = 1;
+            speedZones[speedZoneCount].speedDir = new Vector2(1, 1);
+            speedZones[speedZoneCount].speedMod = .1f;
+            speedZones[speedZoneCount].id = speedZoneCount++;
+
+            /*speedZones[speedZoneCount].sprite = new SpriteData
+            {
+                rotation = MathHelper.ToRadians(0),
+                scale = 10f,
+                loc = walls[speedZoneCount].sprite.loc,
+                rect = new Rectangle(
+                    walls[speedZoneCount].sprite.loc.ToPoint(),
+                    new Point((int)(walls[1].sprite.loc.X - walls[0].sprite.loc.X), walls[0].sprite.rect.Width)
+                    )
+            };
+            speedZones[speedZoneCount].speedDir = new Vector2(1, 1);
+            speedZones[speedZoneCount].speedMod = 100f;*/
+            speedZones[speedZoneCount].id = speedZoneCount++;
+
+            /*speedZones[speedZoneCount].sprite = new SpriteData
+            {
+                rotation = MathHelper.ToRadians(0),
+                scale = 10f,
+                loc = walls[0].sprite.loc,
+                rect = new Rectangle(
+                    walls[0].sprite.loc.ToPoint(),
+                    new Point((int)(walls[1].sprite.loc.X - walls[0].sprite.loc.X), walls[0].sprite.rect.Width)
+                    )
+            };
+            speedZones[speedZoneCount].speedDir = new Vector2(1, 1);
+            speedZones[speedZoneCount].speedMod = 100f*/
+            speedZones[speedZoneCount].id = speedZoneCount++;
 
             foreach (var zone in speedZones)
             {
