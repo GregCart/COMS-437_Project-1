@@ -118,8 +118,6 @@ namespace Objects
 
         public bool RectIntersects(SpriteData other)
         {
-            Rectangle ret = new Rectangle();
-
             Rectangle? intersection = rect.CollidesWith(other.rect);
 
             if (!intersection.HasValue) return false;

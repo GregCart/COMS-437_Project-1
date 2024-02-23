@@ -60,7 +60,7 @@ namespace Objects
                     wasInMotion = false;
                 }
 
-                if (this.vel.Length() > 5e-3f)
+                if (this.vel.Length() > .05f)
                 {
                     inMotion = true;
                 }

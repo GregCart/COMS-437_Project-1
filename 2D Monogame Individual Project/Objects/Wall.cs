@@ -22,7 +22,6 @@ namespace Objects
         public int color;
 
         private Vector2 scale;
-        private Color[] texc;
 
 
         private int cooldown = 0;
@@ -144,13 +143,13 @@ namespace Objects
                 return;
             }
 
-            if (doIntersect(ballDirPt, ball.nextPos, pos, end) || ball.sprite.RectIntersects(sprite))
+            if (doIntersect(ballDirPt, ball.nextPos, pos, end) || ball.sprite.Intersects(this.sprite))
             {
                 if (this.cooldown <= 0)
                 {
                     ball.vel = Vector2.Reflect(ball.vel, -Vector2.UnitX.Rotate(this.sprite.rotation - (MathF.PI / 2)));
-                    ball.vel *= new Vector2(1.1f, 1.1f);
-                    this.cooldown = 100;
+                    ball.vel *= new Vector2(1.0001f, 1.0001f);
+                    this.cooldown = 15;
                 }
             }
             this.cooldown--;

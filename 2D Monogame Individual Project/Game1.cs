@@ -36,7 +36,7 @@ namespace _2D_Monogame_Individual_Project
         protected override void Initialize()
         {
             _frame = new Frame2D();
-            walls = new Wall[12];
+            walls = new Wall[11];
             speedZones = new SpeedZone[3];
 
             wallThickness = 4;
@@ -275,22 +275,6 @@ namespace _2D_Monogame_Individual_Project
             x = (int)(walls[3].sprite.loc.X + ((pt.X - walls[3].sprite.loc.X) / 4));
             y = pt.Y + wallThickness;
 
-            pt = walls[6].endPoint().ToPoint();
-            walls[11].sprite = new SpriteData
-            {
-                rect = new Rectangle(
-                            pt.X,
-                            pt.Y + wallThickness,
-                            (int)(minLength * .8),
-                            wallThickness * 5
-                       ),
-                rotation = MathHelper.ToRadians(190),
-                scale = 1.0f,
-                loc = new Vector2(x, y)
-            };
-            walls[11].sides = new EWallSide[] { BOTTOM, LEFT, RIGHT };
-            walls[11].id = wallNum++;
-
             foreach (var wall in walls)
             {
                 wall.UpdateContent();
@@ -319,7 +303,8 @@ namespace _2D_Monogame_Individual_Project
                     )
             };
             speedZones[speedZoneCount].speedDir = new Vector2(-1, -1);
-            speedZones[speedZoneCount].speedMod = .002f;
+            speedZones[speedZoneCount].speedMod = .0025f;
+            speedZones[speedZoneCount].color = 3;
             speedZones[speedZoneCount].id = speedZoneCount++;
 
             speedZones[speedZoneCount].sprite = new SpriteData
@@ -334,6 +319,7 @@ namespace _2D_Monogame_Individual_Project
             };
             speedZones[speedZoneCount].speedDir = new Vector2(1, 1);
             speedZones[speedZoneCount].speedMod = .005f;
+            speedZones[speedZoneCount].color = 1;
             speedZones[speedZoneCount].id = speedZoneCount++;
 
             /*speedZones[speedZoneCount].sprite = new SpriteData
