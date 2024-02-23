@@ -49,35 +49,39 @@ namespace Objects
 
         public override void Update(GameTime gameTime)
         {
-            if (inMotion)
+            if (this.Visible)
             {
-                wasInMotion = true;
-            }
-            else
-            {
-                wasInMotion = false;
-            }
+                if (inMotion)
+                {
+                    wasInMotion = true;
+                }
+                else
+                {
+                    wasInMotion = false;
+                }
 
-            if (this.vel.Length() > 1e-6f)
-            {
-                inMotion = true;
-            } else
-            {
-                inMotion = false;
-            }
+                if (this.vel.Length() > 5e-3f)
+                {
+                    inMotion = true;
+                }
+                else
+                {
+                    inMotion = false;
+                }
 
-            if (this.inMotion || this.wasInMotion)
-            {
-                this.sprite.loc = this.nextPos;
+                if (this.inMotion || this.wasInMotion || this.vel.Length() > 5e-6f)
+                {
+                    this.sprite.loc = this.nextPos;
 
-                this.nextPos = this.sprite.loc + this.vel;
+                    this.nextPos = this.sprite.loc + this.vel;
 
-                Vector2 accel = this.vel;
+                    Vector2 accel = this.vel;
 
-                accel.Normalize();
+                    accel.Normalize();
 
-                this.vel -= accel * MathHelper.Min(this.vel.Length(), (float)(.2 * gameTime.ElapsedGameTime.TotalSeconds));
-                this.sprite.rect = new(this.sprite.loc.ToPoint(), (this.sprite.loc + this.sprite.size()).ToPoint());
+                    this.vel -= accel * MathHelper.Min(this.vel.Length(), (float)(.2 * gameTime.ElapsedGameTime.TotalSeconds));
+                    this.sprite.rect = new(this.sprite.loc.ToPoint(), (this.sprite.loc + this.sprite.size()).ToPoint());
+                }
             }
 
             base.Update(gameTime);

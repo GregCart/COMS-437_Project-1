@@ -299,22 +299,22 @@ namespace _2D_Monogame_Individual_Project
                     new Point((int)(walls[1].sprite.loc.X - walls[0].sprite.loc.X), walls[0].sprite.rect.Width)
                     )
             };
-            speedZones[speedZoneCount].speedDir = new Vector2(1, 1);
-            speedZones[speedZoneCount].speedMod = .1f;
+            speedZones[speedZoneCount].speedDir = new Vector2(-1, -1);
+            speedZones[speedZoneCount].speedMod = .002f;
             speedZones[speedZoneCount].id = speedZoneCount++;
 
-            /*speedZones[speedZoneCount].sprite = new SpriteData
+            speedZones[speedZoneCount].sprite = new SpriteData
             {
                 rotation = MathHelper.ToRadians(0),
                 scale = 10f,
-                loc = walls[speedZoneCount].sprite.loc,
+                loc = walls[5].sprite.loc,
                 rect = new Rectangle(
-                    walls[speedZoneCount].sprite.loc.ToPoint(),
-                    new Point((int)(walls[1].sprite.loc.X - walls[0].sprite.loc.X), walls[0].sprite.rect.Width)
+                    walls[5].sprite.loc.ToPoint(),
+                    new Point(walls[5].sprite.rect.Width, (int)(walls[6].sprite.loc.Y - walls[5].sprite.loc.Y))
                     )
             };
             speedZones[speedZoneCount].speedDir = new Vector2(1, 1);
-            speedZones[speedZoneCount].speedMod = 100f;*/
+            speedZones[speedZoneCount].speedMod = .005f;
             speedZones[speedZoneCount].id = speedZoneCount++;
 
             /*speedZones[speedZoneCount].sprite = new SpriteData

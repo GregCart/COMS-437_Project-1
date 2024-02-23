@@ -117,12 +117,13 @@ namespace Objects
                 return;
             }
 
-            if (doIntersect(ballDirPt, ball.nextPos, pos, end))
+            if (doIntersect(ballDirPt, ball.nextPos, pos, end) || ball.sprite.RectIntersects(sprite) || ball.sprite.Intersects(sprite))
             {
                 if (this.cooldown <= 0)
                 {
                     ball.vel = Vector2.Reflect(ball.vel, -Vector2.UnitX.Rotate(this.sprite.rotation - (MathF.PI / 2)));
-                    this.cooldown = 120;
+                    ball.vel *= new Vector2(1.1f, 1.1f);
+                    this.cooldown = 100;
                 }
             }
             this.cooldown--;
