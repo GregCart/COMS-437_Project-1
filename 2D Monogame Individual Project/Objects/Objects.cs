@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using _2D_Monogame_Individual_Project;
 
 namespace Objects
 {
@@ -117,6 +118,8 @@ namespace Objects
 
         public bool RectIntersects(SpriteData other)
         {
+            Rectangle ret = new Rectangle();
+
             Rectangle? intersection = rect.CollidesWith(other.rect);
 
             if (!intersection.HasValue) return false;

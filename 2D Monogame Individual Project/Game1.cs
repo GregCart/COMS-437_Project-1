@@ -36,7 +36,7 @@ namespace _2D_Monogame_Individual_Project
         protected override void Initialize()
         {
             _frame = new Frame2D();
-            walls = new Wall[11];
+            walls = new Wall[12];
             speedZones = new SpeedZone[3];
 
             wallThickness = 4;
@@ -55,7 +55,7 @@ namespace _2D_Monogame_Individual_Project
 
             Components.Add(ball);
 
-            for (int i = 0; i < 11; i++)
+            for (int i = 0; i < walls.Length; i++)
             {
                 walls[i] = new Wall(this);
                 Components.Add(walls[i]);
@@ -271,6 +271,25 @@ namespace _2D_Monogame_Individual_Project
             };
             walls[10].sides = new EWallSide[] { BOTTOM };
             walls[10].id = wallNum++;
+            pt = walls[3].endPoint().ToPoint();
+            x = (int)(walls[3].sprite.loc.X + ((pt.X - walls[3].sprite.loc.X) / 4));
+            y = pt.Y + wallThickness;
+
+            pt = walls[6].endPoint().ToPoint();
+            walls[11].sprite = new SpriteData
+            {
+                rect = new Rectangle(
+                            pt.X,
+                            pt.Y + wallThickness,
+                            (int)(minLength * .8),
+                            wallThickness * 5
+                       ),
+                rotation = MathHelper.ToRadians(190),
+                scale = 1.0f,
+                loc = new Vector2(x, y)
+            };
+            walls[11].sides = new EWallSide[] { BOTTOM, LEFT, RIGHT };
+            walls[11].id = wallNum++;
 
             foreach (var wall in walls)
             {

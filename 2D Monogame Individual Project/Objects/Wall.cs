@@ -19,6 +19,11 @@ namespace Objects
         public bool rotatedY = false; 
         public EWallSide[] sides;
         public float angle;
+        public int color;
+
+        private Vector2 scale;
+        private Color[] texc;
+
 
         private int cooldown = 0;
 
@@ -53,6 +58,11 @@ namespace Objects
             return new Vector2(x, y);
         }
 
+        public override void Initialize()
+        {
+            this.color = 2;
+        }
+
         protected override void LoadContent()
         {
             if (tex == null)
@@ -63,8 +73,25 @@ namespace Objects
             {
                 wallColor = new Rectangle(2, 0, 1, 1);
             }
+            if (sprite.rect.Width <= 0)
+            {
+                sprite.rect = new Rectangle(1, 1, 1, 1);
+            }
+            this.scale = new Vector2(this.sprite.rect.Width, this.sprite.rect.Height);
 
-            this.sprite.tex = tex;
+            SpriteBatch sb = ((SpriteBatch)Game.Services.GetService(typeof(SpriteBatch)));
+
+            sprite.tex = new Texture2D(sb.GraphicsDevice, 1, 1);
+
+            // Fill texture with given color.
+            var data = new Color[1];
+            var texc = new Color[32];
+
+            tex.GetData(texc);
+
+            data[0] = texc[color];
+
+            sprite.tex.SetData(data);
 
             base.LoadContent();
         }
@@ -117,7 +144,7 @@ namespace Objects
                 return;
             }
 
-            if (doIntersect(ballDirPt, ball.nextPos, pos, end) || ball.sprite.RectIntersects(sprite) || ball.sprite.Intersects(sprite))
+            if (doIntersect(ballDirPt, ball.nextPos, pos, end) || ball.sprite.RectIntersects(sprite))
             {
                 if (this.cooldown <= 0)
                 {
@@ -133,7 +160,17 @@ namespace Objects
 
         public override void Draw(GameTime gameTime)
         {
-            ((SpriteBatch)Game.Services.GetService(typeof(SpriteBatch))).Draw(tex, sprite.rect, wallColor, Color.White, sprite.rotation, Vector2.Zero, SpriteEffects.None, 0.0f);
+            ((SpriteBatch)Game.Services.GetService(typeof(SpriteBatch))).Draw(
+                sprite.tex, 
+                sprite.loc, 
+                null, 
+                Color.White, 
+                sprite.rotation, 
+                Vector2.Zero, 
+                this.scale,
+                SpriteEffects.None, 
+                0.0f
+            );
 
             base.Draw(gameTime);
         }
