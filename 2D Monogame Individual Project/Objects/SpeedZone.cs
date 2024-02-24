@@ -15,6 +15,9 @@ namespace Objects
         public int id;
         public Vector2 speedDir;
         public SpriteData sprite;
+        public int color;
+
+        private Vector2 scale;
 
 
         public SpeedZone(Game game) : base(game)
@@ -45,6 +48,8 @@ namespace Objects
                 Height = 10
             };
 
+            color = 4;
+
             base.Initialize();
         }
 
@@ -63,25 +68,44 @@ namespace Objects
             {
                 zoneColor = new Rectangle(3, 0, 1, 1);
             }
+            if (sprite.rect.Width <= 0)
+            {
+                sprite.rect = new Rectangle(1, 1, 1, 1);
+            }
 
-            sprite.tex = tex;
+            this.scale = new Vector2(this.sprite.rect.Width, this.sprite.rect.Height);
+
+            SpriteBatch sb = ((SpriteBatch)Game.Services.GetService(typeof(SpriteBatch)));
+
+            if(sb != null)
+            {
+                sprite.tex = new Texture2D(sb.GraphicsDevice, 1, 1);
+
+                // Fill texture with given color.
+                var data = new Color[1];
+                var texc = new Color[32];
+                tex.GetData(texc);
+
+                data[0] = texc[color];
+
+                sprite.tex.SetData(data);
+            }
 
             base.LoadContent();
         }
 
         public override void Draw(GameTime gameTime)
         {
-            SpriteBatch spriteBatch = ((SpriteBatch)Game.Services.GetService(typeof(SpriteBatch)));
-
-            spriteBatch.Draw(
-                sprite.tex,
-                sprite.rect,
-                zoneColor,
-                Color.White,
-                sprite.rotation,
-                Vector2.Zero,
-                SpriteEffects.None,
-                0.0f
+            ((SpriteBatch)Game.Services.GetService(typeof(SpriteBatch))).Draw(
+               sprite.tex,
+               sprite.loc,
+               null,
+               Color.White,
+               sprite.rotation,
+               Vector2.Zero,
+               this.scale,
+               SpriteEffects.None,
+               0.0f
            );
 
             base.Draw(gameTime);

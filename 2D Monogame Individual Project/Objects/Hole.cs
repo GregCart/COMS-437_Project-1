@@ -14,6 +14,7 @@ namespace Objects
 
         private SpriteFont font;
         private bool isEntered;
+        private bool victory;
 
 
         public Hole(Game game) : base(game)
@@ -53,7 +54,7 @@ namespace Objects
         public override void Update(GameTime gameTime)
         {
             Ball ball = ((Ball)Game.Components.ElementAt(4));
-            if(ball.sprite.Intersects(this.sprite))
+            if(ball.nextPos.IsInsideRect(this.sprite.rect))
             {
                 this.isEntered = true;
             }
@@ -69,7 +70,11 @@ namespace Objects
             {
                 spriteBatch.DrawString(font, "You Win!", new Vector2(100, 100), Color.BlanchedAlmond);
                 Ball ball = ((Ball)Game.Components.ElementAt(4));
-                ball.visible = false;
+                ball.Visible = false;
+                if (!victory)
+                {
+                    this.victory = true;
+                }
             }
 
             spriteBatch.Draw(
@@ -78,7 +83,8 @@ namespace Objects
                 null, 
                 Color.White, 
                 sprite.rotation,
-                new Vector2(this.sprite.size().X / 2, this.sprite.size().Y / 2), 
+                //new Vector2(this.sprite.size().X / 2, this.sprite.size().Y / 2), 
+                Vector2.Zero,
                 sprite.scale, 
                 SpriteEffects.None, 
                 0.0f

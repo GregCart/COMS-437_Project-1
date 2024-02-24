@@ -127,6 +127,12 @@ namespace Objects
             return new Rectangle(min, max - min);
         }
 
+        public static bool IsInsideRect(this Vector2 vec, Rectangle r)
+        {
+            //greater than min point (Top Left), less than max point (Bottom Right)
+            return (vec.X > r.X && vec.Y > r.Y) && (vec.X < r.X + r.Width && vec.Y < r.Y + r.Height);
+        }
+
         #endregion
 
         #region from geeksforgeeks

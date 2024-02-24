@@ -55,7 +55,7 @@ namespace _2D_Monogame_Individual_Project
 
             Components.Add(ball);
 
-            for (int i = 0; i < 11; i++)
+            for (int i = 0; i < walls.Length; i++)
             {
                 walls[i] = new Wall(this);
                 Components.Add(walls[i]);
@@ -271,6 +271,9 @@ namespace _2D_Monogame_Individual_Project
             };
             walls[10].sides = new EWallSide[] { BOTTOM };
             walls[10].id = wallNum++;
+            pt = walls[3].endPoint().ToPoint();
+            x = (int)(walls[3].sprite.loc.X + ((pt.X - walls[3].sprite.loc.X) / 4));
+            y = pt.Y + wallThickness;
 
             foreach (var wall in walls)
             {
@@ -300,7 +303,8 @@ namespace _2D_Monogame_Individual_Project
                     )
             };
             speedZones[speedZoneCount].speedDir = new Vector2(-1, -1);
-            speedZones[speedZoneCount].speedMod = .002f;
+            speedZones[speedZoneCount].speedMod = .0025f;
+            speedZones[speedZoneCount].color = 3;
             speedZones[speedZoneCount].id = speedZoneCount++;
 
             speedZones[speedZoneCount].sprite = new SpriteData
@@ -315,6 +319,7 @@ namespace _2D_Monogame_Individual_Project
             };
             speedZones[speedZoneCount].speedDir = new Vector2(1, 1);
             speedZones[speedZoneCount].speedMod = .005f;
+            speedZones[speedZoneCount].color = 1;
             speedZones[speedZoneCount].id = speedZoneCount++;
 
             /*speedZones[speedZoneCount].sprite = new SpriteData
