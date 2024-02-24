@@ -1,5 +1,6 @@
 ﻿using _2D_Monogame_Individual_Project.Objects;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace Objects
     internal class Hole : DrawableGameComponent
     {
         public static Texture2D tex;
+
+        private static SoundEffect ballSound;
 
         public SpriteData sprite;
 
@@ -31,6 +34,10 @@ namespace Objects
             if (font == null)
             {
                 font = Game.Content.Load<SpriteFont>("Textures/GO-Font");
+            }
+            if (ballSound == null)
+            {
+                ballSound = Game.Content.Load<SoundEffect>("Sounds/Clips/Happy Wheels Victory Sound EARRAPE");
             }
 
             sprite.tex = tex;
@@ -68,11 +75,12 @@ namespace Objects
 
             if (isEntered)
             {
-                spriteBatch.DrawString(font, "You Win!", new Vector2(100, 100), Color.BlanchedAlmond);
+                spriteBatch.DrawString(font, "You Win!", new Vector2(130, 200), Color.BlanchedAlmond);
                 Ball ball = ((Ball)Game.Components.ElementAt(4));
                 ball.Visible = false;
                 if (!victory)
                 {
+                    ballSound.Play();
                     this.victory = true;
                 }
             }

@@ -80,3 +80,10 @@
 /processorParam:TextureFormat=Color
 /build:Textures/hole.png
 
+#begin Textures/Warn-Font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Textures/Warn-Font.spritefont
+

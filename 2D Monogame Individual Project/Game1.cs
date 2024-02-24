@@ -15,7 +15,7 @@ namespace _2D_Monogame_Individual_Project
         private SpriteBatch _spriteBatch;
         private Texture2D _wallTexture;
         private Random rnd;
-
+        private SpriteFont font;
         private InputManager inputManager;
         private Frame2D _frame;
         private Wall[] walls;
@@ -72,6 +72,11 @@ namespace _2D_Monogame_Individual_Project
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             Services.AddService(typeof(SpriteBatch), _spriteBatch);
+
+            if (font == null)
+            {
+                font = Content.Load<SpriteFont>("Textures/Warn-Font");
+            }
 
             _frame.upperLeft = new Vector2(5, 5);
             _frame.upperRight = new Vector2(GraphicsDevice.Viewport.Width - 5, 5);
@@ -406,9 +411,16 @@ namespace _2D_Monogame_Individual_Project
 
             _spriteBatch.Begin();
 
-            base.Draw(gameTime); 
-            
+            base.Draw(gameTime);
+
+            if (gameTime.TotalGameTime.TotalSeconds < 30)
+            {
+                _spriteBatch.Draw(new Texture2D(GraphicsDevice, 200, 150), new Rectangle((walls[0].sprite.loc - new Vector2(10)).ToPoint(), new Point(250, 200)), Color.AliceBlue);
+                _spriteBatch.DrawString(font, "Please Turn Down\nYour Volume!", new Vector2(130, 200), Color.BlanchedAlmond);
+            }
+
             _spriteBatch.End();
+
         }
     }
 }
