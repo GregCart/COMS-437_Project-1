@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Objects
 {
@@ -15,8 +16,8 @@ namespace Objects
         public static Texture2D tex;
         public static Rectangle wallColor;
 
-        private static Song wallsSound;
-        private static Song wall10Sound;
+        private static SoundEffect wallsSound;
+        private static SoundEffect wall10Sound;
 
         public int id;
         public SpriteData sprite;
@@ -78,11 +79,11 @@ namespace Objects
             }
             if (wallsSound == null)
             {
-                wallsSound = Game.Content.Load<Song>("Sounds/Clips/TF2 Heavy Hurt Sound Effect-edits");
+                wallsSound = Game.Content.Load<SoundEffect>("Sounds/Clips/TF2 Heavy Hurt Sound Effect-edits");
             }
             if (wall10Sound == null)
             {
-                wall10Sound = Game.Content.Load<Song>("Sounds/Clips/Metal pipe falling sound effect but it’s more violent");
+                wall10Sound = Game.Content.Load<SoundEffect>("Sounds/Clips/Metal pipe falling sound effect but it’s more violent");
             }
             if (sprite.rect.Width <= 0)
             {
@@ -166,10 +167,10 @@ namespace Objects
                     switch (id)
                     {
                         case 10:
-                            MediaPlayer.Play(wall10Sound);
+                            wall10Sound.Play();
                             break;
                         default:
-                            MediaPlayer.Play(wallsSound);
+                            wallsSound.Play();
                             break;
                     }
                     MediaPlayer.IsRepeating = false;

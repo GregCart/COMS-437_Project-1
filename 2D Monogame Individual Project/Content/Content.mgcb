@@ -15,13 +15,13 @@
 
 #begin Sounds/Clips/Happy Wheels Victory Sound EARRAPE.mp3
 /importer:Mp3Importer
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sounds/Clips/Happy Wheels Victory Sound EARRAPE.mp3
 
 #begin Sounds/Clips/Metal pipe falling sound effect but it’s more violent.mp3
 /importer:Mp3Importer
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sounds/Clips/Metal pipe falling sound effect but it’s more violent.mp3
 
@@ -33,7 +33,7 @@
 
 #begin Sounds/Clips/TF2 Heavy Hurt Sound Effect-edits.mp3
 /importer:Mp3Importer
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sounds/Clips/TF2 Heavy Hurt Sound Effect-edits.mp3
 

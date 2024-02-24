@@ -1,6 +1,8 @@
 ﻿using _2D_Monogame_Individual_Project.Objects;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using System;
 
 namespace Objects
@@ -8,6 +10,9 @@ namespace Objects
     internal class Ball : DrawableGameComponent
     {
         public static Texture2D tex;
+
+        private static SoundEffect ballSound;
+
         public SpriteData sprite;
         public Vector2 acceleration;
         public Vector2 nextPos;
@@ -33,6 +38,10 @@ namespace Objects
             if (tex == null)
             {
                 tex = Game.Content.Load<Texture2D>("Textures/ball");
+            }
+            if (ballSound == null)
+            {
+                ballSound = Game.Content.Load<SoundEffect>("Sounds/Clips/sandman_homerun-modded");
             }
 
             sprite.tex = tex;
@@ -93,8 +102,9 @@ namespace Objects
             {
                 Vector2 dir = (InputManager.MDPos - this.sprite.center());
                 dir.Normalize();
-                this.vel = (dir * MathHelper.Max(1, (InputManager.DownTime * 25) % 100)) / 50;
+                this.vel = (dir * MathHelper.Max(1, (InputManager.DownTime * 25) % 100)) / 45;
                 this.inMotion = true;
+                ballSound.Play();
             }
         }
 
