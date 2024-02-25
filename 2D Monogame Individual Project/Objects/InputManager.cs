@@ -52,7 +52,7 @@ namespace _2D_Monogame_Individual_Project.Objects
             currentKeyState = Keyboard.GetState();
             LeftClicked = ms.LeftButton == ButtonState.Pressed;
             // true On left release like Windows buttons
-            Debug.WriteLine("test " + KeyPressed(Keys.Space));
+            //Debug.WriteLine("test " + KeyPressed(Keys.Space));
             if (currentKeyState.GetPressedKeyCount() > 0)
             {
                 ButtonDown = true;
@@ -87,9 +87,9 @@ namespace _2D_Monogame_Individual_Project.Objects
             } else if (ButtonDown)
             {
                 //handle button input code
+                Ball ball = (Ball)game.Components.ElementAt(4);
                 if (MDPos == Vector2.Zero)
                 {
-                    Ball ball = (Ball)game.Components.ElementAt(4);
                     MDPos = ball.sprite.loc - Vector2.UnitY;
                 }
                 foreach (Keys k in currentKeyState.GetPressedKeys())
@@ -97,7 +97,7 @@ namespace _2D_Monogame_Individual_Project.Objects
                     switch (k) 
                     {
                         case Keys.A:
-                            MDPos = MDPos.Rotate(MathHelper.ToRadians(-1));
+                            MDPos = (MDPos - ball.sprite.loc).Rotate(MathHelper.ToRadians(-1)) + ball.sprite.loc;
                             break;
                         case Keys.W:
                             if (Time == 0f)
@@ -114,14 +114,14 @@ namespace _2D_Monogame_Individual_Project.Objects
                             DownTime = MathF.Max(DownTime - (float)(gameTime.ElapsedGameTime.TotalSeconds), 0f);
                             break;
                         case Keys.D:
-                            MDPos = MDPos.Rotate(MathHelper.ToRadians(1));
+                            MDPos = (MDPos - ball.sprite.loc).Rotate(MathHelper.ToRadians(1)) + ball.sprite.loc;
                             break;
                     }
                 }
                 if (KeyPressed(Keys.Space))
                 {
                     Time = (float)(gameTime.TotalGameTime.TotalSeconds - Time);
-                    ((Ball)game.Components.ElementAt(4)).Kick();
+                    ball.Kick();
                     ButtonDown = false;
                 }
             }
