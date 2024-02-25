@@ -27,7 +27,7 @@ namespace Objects
         {
             sprite.loc = new Vector2(frame.center.X - 200, frame.center.Y + 100);
             vel = new Vector2(0, 0);
-            sprite.scale = .1f;
+            sprite.scale = .5f;
             this.nextPos = this.sprite.loc + vel;
 
             return this;
@@ -153,7 +153,7 @@ namespace Objects
                 {
                     InputManager im = ((InputManager)Game.Services.GetService(typeof(InputManager)));
 
-                    if (InputManager.MDPos != Vector2.Zero && (InputManager.LeftClicked))
+                    if (InputManager.MDPos != Vector2.Zero && (InputManager.LeftClicked || InputManager.ButtonDown))
                     {
                         //distance = (int)Vector2.Distance(sprite.loc + (sprite.size() / 2), InputManager.MDPos);
                         distance = (int)(MathHelper.Max(1, (InputManager.DownTime * 25) % 100));

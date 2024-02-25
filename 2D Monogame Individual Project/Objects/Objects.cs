@@ -31,10 +31,10 @@ namespace Objects
 
                 List<Vector2> corners = new()
                 {
-                    loc - c,
-                    new Vector2(loc.X + s.X, loc.Y) - c,
-                    new Vector2(loc.X, loc.Y + s.Y) - c,
-                    new Vector2(loc.X + s.X, loc.Y + s.Y) - c
+                    loc,
+                    new Vector2(loc.X + s.X, loc.Y),
+                    new Vector2(loc.X, loc.Y + s.Y),
+                    new Vector2(loc.X + s.X, loc.Y + s.Y)
                 };
 
                 List<Vector2> rotatedCorners = new(corners.Count);
@@ -97,11 +97,11 @@ namespace Objects
             return texData[texCoord.Y * tex.Width + texCoord.X];
         } 
 
-        public bool Intersects(SpriteData other)
+        public Vector2? Intersects(SpriteData other)
         {
             BoundingBox? intersection = box.Intersects(other.box);
 
-            if (!intersection.HasValue) return false;
+            if (!intersection.HasValue) return null;
 
             float stepSize = Math.Min(scale, other.scale);
             for (float x = intersection.Value.tl.X; x <= intersection.Value.br.X; x += stepSize)
@@ -109,11 +109,12 @@ namespace Objects
                 for (float y = intersection.Value.tl.Y; y <= intersection.Value.br.Y; y += stepSize)
                 {
                     Vector2 coord = new(x, y);
-                    if (PixelByWorldCoord(coord) != Color.Transparent && other.PixelByWorldCoord(coord) != Color.Transparent) return true; 
+                    if (PixelByWorldCoord(coord) != Color.Transparent && other.PixelByWorldCoord(coord) != Color.Transparent) 
+                        return coord; 
                 }
             }
 
-            return false;
+            return null;
         }
 
         public bool RectIntersects(SpriteData other)

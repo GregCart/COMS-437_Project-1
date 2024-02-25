@@ -25,6 +25,12 @@
 /processorParam:Quality=Best
 /build:Sounds/Clips/Metal pipe falling sound effect but it’s more violent.mp3
 
+#begin Sounds/Clips/Microsoft Windows XP Error - Sound Effect (HD).mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Clips/Microsoft Windows XP Error - Sound Effect (HD).mp3
+
 #begin Sounds/Clips/sandman_homerun-modded.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

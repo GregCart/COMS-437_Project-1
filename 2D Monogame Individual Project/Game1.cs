@@ -17,14 +17,16 @@ namespace _2D_Monogame_Individual_Project
         private Random rnd;
         private SpriteFont font;
         private InputManager inputManager;
-        private Frame2D _frame;
         private Wall[] walls;
         private SpeedZone[] speedZones;
         private Ball ball;
         private Hole hole;
+        private Obstacle obstacle;
 
         private int wallThickness;
         private int minLength;
+
+        public Frame2D _frame;
 
         public Game1()
         {
@@ -61,6 +63,8 @@ namespace _2D_Monogame_Individual_Project
                 Components.Add(walls[i]);
             }
 
+            obstacle = new Obstacle(this);
+            Components.Add(obstacle);
 
             inputManager = new InputManager(this);
             Services.AddService(typeof(InputManager), inputManager);
@@ -97,7 +101,7 @@ namespace _2D_Monogame_Individual_Project
                     rect = new Rectangle(
                             x,
                             y,
-                            minLength * 14,
+                            minLength * 13,
                             wallThickness
                        ),
                     rotation = MathHelper.ToRadians(90),
@@ -215,13 +219,13 @@ namespace _2D_Monogame_Individual_Project
                 rect = new Rectangle(
                             x,
                             y,
-                            (int)(walls[2].endPoint().Y - walls[3].endPoint().Y),
+                            (int)MathF.Min(walls[2].endPoint().Y - walls[3].endPoint().Y, _frame.lowerLeft.Y - y),
                             wallThickness
                        ),
                 rotation = MathHelper.ToRadians(90),
                 scale = 1.0f, loc = new Vector2(x, y)
             };
-            walls[7].sides = new EWallSide[] { RIGHT, TOP };
+            walls[7].sides = new EWallSide[] { LEFT };
             walls[7].rotatedY = true;
             walls[7].id = wallNum++;
 
@@ -233,7 +237,7 @@ namespace _2D_Monogame_Individual_Project
                 rect = new Rectangle(
                             x,
                             y,
-                            (int)(walls[7].endPoint().Y - walls[5].endPoint().Y),
+                            (int)MathF.Min(walls[7].endPoint().Y - walls[5].endPoint().Y, _frame.lowerLeft.Y - (y - minLength)),
                             wallThickness
                        ),
                 rotation = MathHelper.ToRadians(120),
@@ -346,6 +350,12 @@ namespace _2D_Monogame_Individual_Project
                 zone.UpdateContent();
             }
 
+            obstacle.sprite.loc = new(walls[1].sprite.loc.X - 50, walls[1].sprite.center().Y);
+            obstacle.sprite.rect = new Rectangle(obstacle.sprite.loc.ToPoint(), new Point(obstacle.size));
+            obstacle.sprite.rotation = MathHelper.ToRadians(0);
+            obstacle.sprite.scale = 1.0f;
+            obstacle.UpdateContent();
+
             base.LoadContent();
         }
 
@@ -413,7 +423,7 @@ namespace _2D_Monogame_Individual_Project
 
             base.Draw(gameTime);
 
-            if (gameTime.TotalGameTime.TotalSeconds < 30)
+            if (gameTime.TotalGameTime.TotalSeconds < 20)
             {
                 _spriteBatch.Draw(new Texture2D(GraphicsDevice, 200, 150), new Rectangle((walls[0].sprite.loc - new Vector2(10)).ToPoint(), new Point(250, 200)), Color.AliceBlue);
                 _spriteBatch.DrawString(font, "Please Turn Down\nYour Volume!", new Vector2(130, 200), Color.BlanchedAlmond);

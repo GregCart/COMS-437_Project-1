@@ -2,7 +2,10 @@
 using Microsoft.Xna.Framework.Input;
 using Objects;
 using System;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection.Metadata;
+using System.Reflection.Metadata.Ecma335;
 
 // from https://stackoverflow.com/questions/75449753/c-sharp-monogame-handling-mouse
 namespace _2D_Monogame_Individual_Project.Objects
@@ -11,6 +14,11 @@ namespace _2D_Monogame_Individual_Project.Objects
     {
         public static bool LeftClicked = false;
         public static bool LeftWasClicked = false;
+        public static bool ButtonDown = false;
+
+        static KeyboardState currentKeyState;
+        static KeyboardState previousKeyState;
+
         public static bool count = true;
 
         private static MouseState ms = new MouseState(), oms;
@@ -19,9 +27,9 @@ namespace _2D_Monogame_Individual_Project.Objects
         public static float Time = 0.0f;
         public static float DownTime = 0.0f;
 
-        private static Game game;
+        private static Game1 game;
 
-        public InputManager(Game game) : base(game)
+        public InputManager(Game1 game) : base(game)
         {
             InputManager.game = game;
         }
@@ -39,38 +47,104 @@ namespace _2D_Monogame_Individual_Project.Objects
         public static void Update(GameTime gameTime)
         {
             oms = ms;
+            previousKeyState = currentKeyState;
             ms = Mouse.GetState();
+            currentKeyState = Keyboard.GetState();
             LeftClicked = ms.LeftButton == ButtonState.Pressed;
             // true On left release like Windows buttons
-
+            Debug.WriteLine("test " + KeyPressed(Keys.Space));
+            if (currentKeyState.GetPressedKeyCount() > 0)
+            {
+                ButtonDown = true;
+            }
             if (LeftClicked)
             {
                 MDPos = ms.Position.ToVector2();
-                LeftWasClicked = true;
-                if (count)
+                if (MDPos.IsInsideRect(new Rectangle(game._frame.upperLeft.ToPoint(), (game._frame.lowerRight - game._frame.upperLeft).ToPoint())))
                 {
-                    Time = (float)gameTime.TotalGameTime.TotalSeconds;
-                    count = false;
+                    LeftWasClicked = true;
+                    if (count)
+                    {
+                        Time = (float)gameTime.TotalGameTime.TotalSeconds;
+                        count = false;
+                    }
+                    DownTime = (float)(gameTime.TotalGameTime.TotalSeconds - Time);
                 }
-                DownTime = (float)(gameTime.TotalGameTime.TotalSeconds - Time);
-                Console.WriteLine(MDPos.ToString());
             }
             else if (LeftWasClicked)
             {
-                Time = (float)(gameTime.TotalGameTime.TotalSeconds - Time);
-                LeftWasClicked = false;
-                Ball ball = (Ball)game.Components.ElementAt(4);
-                ball.Kick();
+                if (MDPos.IsInsideRect(new Rectangle(game._frame.upperLeft.ToPoint(), (game._frame.lowerRight - game._frame.upperLeft).ToPoint())))
+                {
+                    Time = (float)(gameTime.TotalGameTime.TotalSeconds - Time);
+                    LeftWasClicked = false;
+                    Ball ball = (Ball)game.Components.ElementAt(4);
+                    ball.Kick();
+                }
             }
-            else
+            else if (!ButtonDown)
             {
                 Reset();
+            } else if (ButtonDown)
+            {
+                //handle button input code
+                if (MDPos == Vector2.Zero)
+                {
+                    Ball ball = (Ball)game.Components.ElementAt(4);
+                    MDPos = ball.sprite.loc - Vector2.UnitY;
+                }
+                foreach (Keys k in currentKeyState.GetPressedKeys())
+                {
+                    switch (k) 
+                    {
+                        case Keys.A:
+                            MDPos = MDPos.Rotate(MathHelper.ToRadians(-1));
+                            break;
+                        case Keys.W:
+                            if (Time == 0f)
+                            {
+                                Time = (float)gameTime.TotalGameTime.TotalSeconds;
+                            }
+                            DownTime += (float)(gameTime.ElapsedGameTime.TotalSeconds);
+                            break;
+                        case Keys.S:
+                            if (Time == 0f)
+                            {
+                                Time = (float)gameTime.TotalGameTime.TotalSeconds;
+                            }
+                            DownTime = MathF.Max(DownTime - (float)(gameTime.ElapsedGameTime.TotalSeconds), 0f);
+                            break;
+                        case Keys.D:
+                            MDPos = MDPos.Rotate(MathHelper.ToRadians(1));
+                            break;
+                    }
+                }
+                if (KeyPressed(Keys.Space))
+                {
+                    Time = (float)(gameTime.TotalGameTime.TotalSeconds - Time);
+                    ((Ball)game.Components.ElementAt(4)).Kick();
+                    ButtonDown = false;
+                }
             }
         }
 
         public static bool Hover(Rectangle r)
         {
             return r.Contains(new Vector2(ms.X, ms.Y));
+        }
+
+        public static bool IsDown(Keys key)
+        {
+            return currentKeyState.IsKeyDown(key);
+        }
+
+        public static bool WasDown(Keys key)
+        {
+            return currentKeyState.IsKeyDown(key);
+        }
+
+        public static bool KeyPressed(Keys key)
+        {
+            return !currentKeyState.IsKeyDown(key) && previousKeyState.IsKeyDown(key);
         }
     }
 }

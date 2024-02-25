@@ -156,7 +156,7 @@ namespace Objects
                 return;
             }
 
-            if (doIntersect(ballDirPt, ball.nextPos, pos, end) || ball.sprite.Intersects(this.sprite))
+            if (doIntersect(ballDirPt, ball.nextPos, pos, end) || ball.sprite.Intersects(this.sprite).HasValue)
             {
                 if (this.cooldown <= 0)
                 {
@@ -174,7 +174,7 @@ namespace Objects
                             break;
                     }
                     MediaPlayer.IsRepeating = false;
-                    ball.vel *= new Vector2(1.0001f, 1.0001f);
+                    ball.vel *= new Vector2(1.0000001f, 1.0000001f);
                     this.cooldown = 15;
                 }
             }

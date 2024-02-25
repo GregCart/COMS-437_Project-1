@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Linq;
-using System.Collections.Generic;
 
 namespace Objects
 {
@@ -133,6 +132,28 @@ namespace Objects
             return (vec.X > r.X && vec.Y > r.Y) && (vec.X < r.X + r.Width && vec.Y < r.Y + r.Height);
         }
 
+        public static Vector2 SpriteReflect(this SpriteData obj, Vector2 intersect) 
+        {
+            Vector2 refl = new Vector2();
+            if (intersect.Y <= obj.loc.Y + .5)
+            {
+                refl = -Vector2.UnitY;
+            }
+            else if (intersect.Y >= obj.loc.Y + obj.size().Y - .5)
+            {
+                refl = Vector2.UnitY;
+            }
+            else if (intersect.X <= obj.loc.X + .5)
+            {
+                refl = -Vector2.UnitX;
+            }
+            else if (intersect.X <= obj.loc.X + obj.size().X - .5)
+            {
+                refl = -Vector2.UnitX;
+            }
+
+            return refl;
+        }
         #endregion
 
         #region from geeksforgeeks
@@ -207,8 +228,8 @@ namespace Objects
         # region from Addison
         public static Vector2 Rotate(this Vector2 point, float angle)
         {
-            float x = point.X * (float)Math.Cos(angle) - point.Y * (float)Math.Sin(angle);
-            float y = point.X * (float)Math.Sin(angle) + point.Y * (float)Math.Cos(angle);
+            float x = point.X * (float)Cos(angle) - point.Y * (float)Sin(angle);
+            float y = point.X * (float)Sin(angle) + point.Y * (float)Cos(angle);
 
             return new Vector2(x, y);
         }
