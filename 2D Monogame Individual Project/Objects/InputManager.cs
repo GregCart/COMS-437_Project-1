@@ -90,14 +90,14 @@ namespace _2D_Monogame_Individual_Project.Objects
                 Ball ball = (Ball)game.Components.ElementAt(4);
                 if (MDPos == Vector2.Zero)
                 {
-                    MDPos = ball.sprite.loc - Vector2.UnitY;
+                    MDPos = ball.sprite.center() - Vector2.UnitY;
                 }
                 foreach (Keys k in currentKeyState.GetPressedKeys())
                 {
                     switch (k) 
                     {
                         case Keys.A:
-                            MDPos = (MDPos - ball.sprite.loc).Rotate(MathHelper.ToRadians(-1)) + ball.sprite.loc;
+                            MDPos = (MDPos - ball.sprite.center()).Rotate(MathHelper.ToRadians(-1)) + ball.sprite.center();
                             break;
                         case Keys.W:
                             if (Time == 0f)
@@ -114,7 +114,7 @@ namespace _2D_Monogame_Individual_Project.Objects
                             DownTime = MathF.Max(DownTime - (float)(gameTime.ElapsedGameTime.TotalSeconds), 0f);
                             break;
                         case Keys.D:
-                            MDPos = (MDPos - ball.sprite.loc).Rotate(MathHelper.ToRadians(1)) + ball.sprite.loc;
+                            MDPos = (MDPos - ball.sprite.center()).Rotate(MathHelper.ToRadians(1)) + ball.sprite.center();
                             break;
                     }
                 }
