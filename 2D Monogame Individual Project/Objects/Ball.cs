@@ -164,10 +164,10 @@ namespace Objects
                             data[i] = color;
                         }
                         texture.SetData(data);
-                        rotation = (float)Math.Atan2(InputManager.MDPos.Y - sprite.loc.Y, InputManager.MDPos.X - sprite.loc.X);
+                        rotation = (float)Math.Atan2(InputManager.MDPos.Y - sprite.center().Y, InputManager.MDPos.X - sprite.center().X);
                         spriteBatch.Draw(
                             texture,
-                            sprite.loc + (sprite.size() / 2),
+                            sprite.center(),
                             null,
                             Color.DimGray,
                             rotation,

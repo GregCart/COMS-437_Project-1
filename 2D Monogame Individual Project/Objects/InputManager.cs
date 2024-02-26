@@ -90,7 +90,7 @@ namespace _2D_Monogame_Individual_Project.Objects
                 Ball ball = (Ball)game.Components.ElementAt(4);
                 if (MDPos == Vector2.Zero)
                 {
-                    MDPos = ball.sprite.center() - Vector2.UnitY;
+                    MDPos = ball.sprite.center() - Vector2.UnitY * ball.sprite.size();
                 }
                 foreach (Keys k in currentKeyState.GetPressedKeys())
                 {
