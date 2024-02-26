@@ -4,12 +4,14 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using System;
+using System.Linq;
 
 namespace Objects
 {
     internal class Ball : DrawableGameComponent
     {
         public static Texture2D tex;
+        public static SpriteFont font;
 
         private static SoundEffect ballSound;
 
@@ -17,6 +19,7 @@ namespace Objects
         public Vector2 acceleration;
         public Vector2 nextPos;
         public Vector2 vel;
+        public int score;
         public bool inMotion { get; private set; }
         public bool wasInMotion { get; private set; }
         public bool visible;
@@ -43,6 +46,12 @@ namespace Objects
             {
                 ballSound = Game.Content.Load<SoundEffect>("Sounds/Clips/sandman_homerun-modded");
             }
+            if (font == null)
+            {
+                font = Game.Content.Load<SpriteFont>("Textures/GO-Font");
+            }
+
+            this.score = 0;
 
             sprite.tex = tex;
             this.visible = true;
@@ -105,17 +114,20 @@ namespace Objects
                 this.vel = (dir * MathHelper.Max(1, (InputManager.DownTime * 25) % 100)) / 45;
                 this.inMotion = true;
                 ballSound.Play();
+                this.score++;
             }
         }
 
         public override void Draw(GameTime gameTime)
         {
+            SpriteBatch spriteBatch = ((SpriteBatch)Game.Services.GetService(typeof(SpriteBatch)));
+
+            spriteBatch.DrawString(font, "Score: " + this.score, new Vector2(350, 75), Color.Aqua);
+
             if (this.visible)
             {
-
-                SpriteBatch spriteBatch = ((SpriteBatch)Game.Services.GetService(typeof(SpriteBatch)));
-
                 spriteBatch.Draw(sprite.tex, sprite.loc, null, Color.White, sprite.rotation, Vector2.Zero, sprite.scale, SpriteEffects.None, 0.0f);
+
 
                 var thickness = 2;
                 Color color = Color.Red;

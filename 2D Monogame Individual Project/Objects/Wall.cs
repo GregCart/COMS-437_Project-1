@@ -161,7 +161,7 @@ namespace Objects
                 if (this.cooldown <= 0)
                 {
                     ball.vel = Vector2.Reflect(ball.vel, -Vector2.UnitX.Rotate(this.sprite.rotation - (MathF.PI / 2)));
-                    ball.vel *= new Vector2(1.1f, 1.1f);
+                    ball.vel *= new Vector2(1.00001f, 1.00001f);
                     this.cooldown = 100;
 
                     switch (id)
